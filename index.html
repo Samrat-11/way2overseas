@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Way2Overseas | Education Services</title>
+    <meta name="description" content="Your pathway to global success. Way2Overseas offers premium 3D education consultancy, visa processing, and coaching in Nellore.">
+    
+    <!-- Premium Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* --- CSS Variables & Theming --- */
+        :root {
+            --bg-color: #F5F5F7;
+            --surface-color: #FFFFFF;
+            --text-primary: #0A192F;
+            --text-secondary: #6B7280;
+            --brand-red: #E11D48;
+            --success-green: #10B981;
+            --success-bg: rgba(16, 185, 129, 0.1);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --glass-bg: rgba(255, 255, 255, 0.9); 
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-float: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
+            --spring-easing: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0A0A0A;
+            --surface-color: #141414;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A1A1AA;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --glass-bg: rgba(20, 20, 20, 0.9);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --shadow-float: 0 30px 50px -15px rgba(0, 0, 0, 0.6);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
+        /* FIX: Removed perspective: 1000px from body so position: fixed works properly */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-primary); 
+            line-height: 1.6; 
+            overflow-x: hidden; 
+            transition: background-color 0.4s ease, color 0.4s ease; 
+        }
+
+        .container { max-width: 1250px; margin: 0 auto; padding: 0 2rem; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* --- Global Animations --- */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 1s var(--spring-easing); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        @keyframes subtlePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- 3D & Glass Components --- */
+        .glass-panel {
+            background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 1.5rem; box-shadow: var(--shadow-sm);
+        }
+
+        .tilt-wrapper { perspective: 1500px; transform-style: preserve-3d; }
+        .tilt-card {
+            transform-style: preserve-3d; transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+            position: relative; overflow: hidden; border-radius: 1.5rem;
+        }
+        .tilt-card:hover { box-shadow: var(--shadow-float); }
+        .tilt-content { transform: translateZ(50px); }
+        .tilt-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform 0.5s ease; }
+        .tilt-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%); z-index: -1; }
+        .tilt-card:hover .tilt-bg { transform: scale(1.08); }
+
+        .btn-primary { 
+            background: var(--text-primary); color: var(--bg-color); padding: 0.8rem 1.8rem; 
+            border-radius: 2rem; font-weight: 600; display: inline-flex; align-items: center; 
+            justify-content: center; gap: 0.5rem; border: none; cursor: pointer; transition: transform 0.3s ease, opacity 0.3s ease; 
+        }
+        .btn-primary:hover { transform: translateY(-3px); opacity: 0.9; box-shadow: var(--shadow-float); }
+
+        .section-header { text-align: center; margin-bottom: 4rem; position: relative; z-index: 10; }
+        .section-header h2 { font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 800; letter-spacing: -0.04em; margin-bottom: 1rem; }
+        .section-header p { color: var(--text-secondary); font-size: 1.125rem; max-width: 700px; margin: 0 auto; }
+
+        /* --- Navbar (Fixed & Sticky) --- */
+        nav { position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 0; z-index: 9999; transition: all 0.4s ease; }
+        nav.scrolled { padding: 1rem 0; background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; position: relative; }
+        .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem; letter-spacing: -0.05em; }
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-links a { font-size: 0.95rem; font-weight: 500; color: var(--text-secondary); transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--text-primary); }
+        .nav-actions { display: flex; align-items: center; gap: 1rem; }
+        .theme-toggle { background: transparent; border: none; color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border-color); transition: all 0.3s; }
+        .theme-toggle:hover { background: var(--text-primary); color: var(--bg-color); }
+        
+        .mobile-menu-btn { display: none; background: transparent; border: none; color: var(--text-primary); cursor: pointer; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 50%; transition: background-color 0.3s; }
+        .mobile-cta { display: none; }
+
+        /* --- Back to Top Floating Button --- */
+        #scrollToTopBtn {
+            position: fixed; /* This makes it float relative to the window */
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--brand-red);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4);
+            z-index: 9998; 
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.4s var(--spring-easing);
+        }
+        #scrollToTopBtn.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        #scrollToTopBtn:hover {
+            transform: translateY(-5px);
+            background: var(--text-primary);
+            box-shadow: var(--shadow-float);
+        }
+
+        /* --- Hero Section --- */
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; padding-top: 5rem; overflow: hidden; }
+        .hero-bg { position: absolute; inset: 0; overflow: hidden; z-index: -1; perspective: 1000px; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5; }
+        .blob-1 { top: 10%; left: 15%; width: 500px; height: 500px; background: rgba(37, 99, 235, 0.4); animation: float 10s ease-in-out infinite; }
+        .blob-2 { bottom: 10%; right: 15%; width: 600px; height: 600px; background: rgba(225, 29, 72, 0.3); animation: float 12s ease-in-out infinite reverse; }
+        @keyframes float { 0%, 100% { transform: translateY(0) translateZ(0) scale(1); } 50% { transform: translateY(-40px) translateZ(50px) scale(1.05); } }
+        .hero h1 { font-size: clamp(3.5rem, 7vw, 6rem); font-weight: 800; letter-spacing: -0.05em; line-height: 1.1; margin-bottom: 1.5rem; transform: translateZ(50px); }
+        .hero h1 span { background: linear-gradient(135deg, var(--text-primary), var(--brand-red)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: clamp(1.1rem, 2vw, 1.3rem); color: var(--text-secondary); max-width: 800px; margin: 0 auto 3rem auto; font-weight: 400; }
+
+        /* --- About Stats --- */
+        .stats-section { padding: 4rem 0; background: var(--surface-color); border-bottom: 1px solid var(--border-color); position: relative; z-index: 10; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
+        .stat-item h3 { font-size: 3rem; font-weight: 800; color: var(--brand-red); line-height: 1; margin-bottom: 0.5rem; }
+        .stat-item p { font-weight: 600; color: var(--text-secondary); }
+
+        /* --- Core Services --- */
+        .services { padding: 8rem 0; background: var(--bg-color); }
+        .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
+        .service-card-3d { padding: 3rem 2rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; height: 100%; background: var(--glass-bg); }
+        .service-icon { width: 70px; height: 70px; border-radius: 1.2rem; background: rgba(225, 29, 72, 0.1); color: var(--brand-red); display: flex; align-items: center; justify-content: center; transform: translateZ(60px); }
+        .service-card-3d h3 { font-size: 1.5rem; font-weight: 700; transform: translateZ(40px); }
+        .service-card-3d p { color: var(--text-secondary); transform: translateZ(20px); }
+
+        /* --- Services Bento Grid --- */
+        .bento-section { padding: 8rem 0; background-color: var(--surface-color); border-top: 1px solid var(--border-color); }
+        .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .bento-card { background: var(--glass-bg); border: 1px solid var(--border-color); border-radius: 1.5rem; padding: 2.5rem; transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; overflow: hidden; }
+        .bento-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-float); }
+        .bento-card.large { grid-column: span 2; }
+        .bento-icon { width: 48px; height: 48px; border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; background: rgba(37, 99, 235, 0.1); color: #3b82f6; }
+        .bento-icon.accent-red { background: rgba(225, 29, 72, 0.1); color: var(--brand-red); }
+        .bento-icon.accent-green { background: rgba(16, 185, 129, 0.1); color: var(--success-green); }
+        .bento-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-primary); }
+        .bento-card p { color: var(--text-secondary); font-size: 0.95rem; }
+        .bento-card.dark-theme { background: var(--text-primary); color: var(--bg-color); border: none; }
+        .bento-card.dark-theme h3 { color: var(--bg-color); }
+        .bento-card.dark-theme p { color: rgba(255, 255, 255, 0.7); }
+        .bento-card.dark-theme .bento-icon { background: rgba(255,255,255,0.1); color: var(--bg-color); }
+        .bg-watermark { position: absolute; right: -20px; top: -20px; opacity: 0.05; font-size: 12rem; color: #fff; pointer-events: none; }
+
+        /* --- Premium Services (6-Grid) --- */
+        .premium-services { padding: 8rem 0; background-color: var(--bg-color); }
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .service-card { padding: 2.5rem; display: flex; flex-direction: column; gap: 1rem; cursor: pointer; transition: all 0.3s ease; }
+        .service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-float); }
+        .service-card .icon { width: 48px; height: 48px; background: rgba(225, 29, 72, 0.1); color: var(--brand-red); border-radius: 12px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .service-card:hover .icon { background: var(--brand-red); color: white; animation: subtlePulse 0.5s ease; }
+        .service-card h3 { font-size: 1.25rem; }
+        .service-card p { color: var(--text-secondary); font-size: 0.95rem; }
+
+        /* --- Visa Categories --- */
+        .visas { padding: 8rem 0; background: var(--bg-color); }
+        .visas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .visa-card { height: 450px; padding: 3rem; display: flex; flex-direction: column; justify-content: flex-end; color: white; border: 1px solid rgba(255,255,255,0.2); }
+        .visa-card h3 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .visa-card p { font-size: 1.1rem; color: rgba(255,255,255,0.9); max-width: 400px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+
+        /* --- Process Timeline --- */
+        .process { padding: 8rem 0; background: var(--surface-color); }
+        .timeline { position: relative; max-width: 800px; margin: 0 auto; }
+        .timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 2px; background: var(--border-color); }
+        .timeline-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4rem; width: 100%; position: relative; }
+        .timeline-item:nth-child(even) { flex-direction: row-reverse; }
+        .timeline-content { width: 45%; padding: 2rem; transition: transform 0.3s ease; }
+        .timeline-item:hover .timeline-content { transform: scale(1.05); }
+        .timeline-dot { position: absolute; left: 50%; transform: translateX(-50%); width: 45px; height: 45px; background: var(--text-primary); color: var(--bg-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; border: 4px solid var(--surface-color); z-index: 2; transition: all 0.3s ease; }
+        .timeline-item:hover .timeline-dot { background: var(--brand-red); transform: translateX(-50%) scale(1.2); }
+
+        /* --- Destinations --- */
+        .destinations { padding: 8rem 0; background: var(--bg-color); }
+        .dest-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        .dest-card { height: 350px; padding: 2rem; display: flex; flex-direction: column; justify-content: flex-end; color: white; border: 1px solid rgba(255,255,255,0.15); }
+        .dest-card h3 { font-size: 2rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; text-shadow: 0 4px 10px rgba(0,0,0,0.6); }
+        .dest-card p { font-size: 0.95rem; color: rgba(255,255,255,0.9); line-height: 1.5; text-shadow: 0 2px 5px rgba(0,0,0,0.6); }
+
+        /* --- FAQ Accordion --- */
+        .faq { padding: 8rem 0; background-color: var(--surface-color); }
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid var(--border-color); }
+        .faq-question { width: 100%; text-align: left; padding: 1.5rem 0; font-size: 1.125rem; font-weight: 600; color: var(--text-primary); background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; color: var(--text-secondary); }
+        .faq-answer p { padding-bottom: 1.5rem; }
+        .faq-question .icon { transition: transform 0.3s ease; }
+        .faq-item.active .faq-question .icon { transform: rotate(180deg); color: var(--brand-red); }
+        .faq-item.active .faq-answer { max-height: 300px; } 
+
+        /* --- Student Success Slider --- */
+        .slider-section { padding: 8rem 0; overflow: hidden; background: var(--bg-color); }
+        .slider-viewport { width: 100%; max-width: 900px; margin: 0 auto; overflow: hidden; padding: 1rem; margin-top: -1rem; border-radius: 2rem; }
+        .slider-track { display: flex; transition: transform 0.8s var(--spring-easing); will-change: transform; }
+        .testimonial-card { flex: 0 0 100%; padding: 0 1rem; opacity: 0.4; transform: scale(0.95); transition: all 0.8s var(--spring-easing); }
+        .testimonial-card.active { opacity: 1; transform: scale(1); }
+        .test-panel { padding: 3rem; display: flex; flex-direction: column; gap: 2rem; }
+        .quote-icon { color: rgba(10, 25, 47, 0.1); width: 48px; height: 48px; }
+        [data-theme="dark"] .quote-icon { color: rgba(255,255,255,0.1); }
+        .review-text { font-size: 1.25rem; line-height: 1.6; color: var(--text-primary); font-weight: 400; font-style: italic; }
+        .student-info { display: flex; align-items: center; gap: 1.5rem; margin-top: auto; padding-top: 2rem; border-top: 1px solid var(--border-color); }
+        .student-photo { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid var(--surface-color); box-shadow: var(--shadow-sm); }
+        .visa-badge { margin-left: auto; display: flex; align-items: center; gap: 0.375rem; background: var(--success-bg); color: var(--success-green); padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem; font-weight: 600; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .controls-container { display: flex; align-items: center; justify-content: center; gap: 2rem; margin-top: 3rem; }
+        .nav-btn { background: var(--surface-color); border: 1px solid var(--border-color); width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-primary); box-shadow: var(--shadow-sm); transition: all 0.3s ease; }
+        .nav-btn:hover { background: var(--text-primary); color: var(--bg-color); transform: translateY(-2px); }
+        .dots { display: flex; gap: 0.5rem; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border-color); cursor: pointer; transition: all 0.3s ease; }
+        .dot.active { background: var(--brand-red); width: 24px; border-radius: 1rem; }
+
+        /* --- Contact --- */
+        .contact { padding: 8rem 0; background: var(--surface-color); }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+        .contact-card { display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: var(--bg-color); border-radius: 1rem; border: 1px solid var(--border-color); transition: transform 0.3s ease; }
+        .contact-card:hover { transform: translateX(10px); box-shadow: var(--shadow-sm); }
+        .contact-card .icon-wrapper { width: 50px; height: 50px; background: rgba(225, 29, 72, 0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; }
+        
+        .contact-form { display: flex; flex-direction: column; gap: 1.5rem; padding: 3rem; }
+        .contact-form input, .contact-form textarea, .contact-form select { 
+            width: 100%; padding: 1rem 1.5rem; border-radius: 0.5rem; border: 1px solid var(--border-color); 
+            background: var(--bg-color); color: var(--text-primary); font-family: inherit; 
+            transition: all 0.3s ease; outline: none;
+        }
+        .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus { 
+            border-color: var(--brand-red); box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.1);
+        }
+
+        /* --- Footer --- */
+        footer { background: var(--surface-color); padding: 4rem 0 2rem 0; border-top: 1px solid var(--border-color); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
+        .footer-col h4 { font-size: 1.1rem; margin-bottom: 1.5rem; font-weight: 700; }
+        .footer-col ul { display: flex; flex-direction: column; gap: 0.8rem; }
+        .footer-col a { color: var(--text-secondary); font-size: 0.95rem; transition: color 0.3s; }
+        .footer-col a:hover { color: var(--brand-red); transform: translateX(5px); display: inline-block; }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* --- Responsive Breakpoints --- */
+        @media (max-width: 1024px) {
+            .services-grid, .grid-cards { grid-template-columns: repeat(2, 1fr); }
+            .visas-grid { grid-template-columns: 1fr; }
+            .bento-grid { grid-template-columns: repeat(2, 1fr); }
+            .bento-card.large { grid-column: span 2; }
+        }
+        
+        /* Mobile Specific Overrides */
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: flex; }
+            .desktop-btn { display: none !important; }
+            
+            .nav-links { 
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--surface-color);
+                flex-direction: column;
+                padding: 2rem 0;
+                border-bottom: 1px solid var(--border-color);
+                box-shadow: var(--shadow-sm);
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: all 0.3s ease;
+                z-index: 99;
+            }
+            
+            .nav-links.active {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+            
+            .mobile-cta { display: flex; margin-top: 1rem; width: 80%; }
+            
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+            .services-grid, .grid-cards { grid-template-columns: 1fr; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-card.large { grid-column: span 1; }
+            .contact-grid { grid-template-columns: 1fr; }
+            
+            .timeline::before { left: 30px; }
+            .timeline-item { flex-direction: column !important; align-items: flex-start; padding-left: 80px; }
+            .timeline-content { width: 100%; padding: 1.5rem; }
+            .timeline-dot { left: 30px; }
+
+            .student-info { flex-wrap: wrap; }
+            .visa-badge { margin-left: 0; width: 100%; justify-content: center; margin-top: 1rem; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            
+            #scrollToTopBtn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .footer-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+            .dest-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav id="navbar">
+        <div class="container nav-content">
+            <a href="#" class="logo">
+                <img src="/way2overseas/img/logo.png" alt="Way2Overseas Logo" style="width: 100px; height: auto;">
+            </a>
+            
+            <!-- Navigation Links -->
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#process">Process</a></li>
+                <li><a href="#destinations">Destinations</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <a href="#contact" class="btn-primary mobile-cta">Contact Us</a>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
+                    <i data-lucide="moon" id="themeIcon"></i>
+                </button>
+                <a href="#contact" class="btn-primary desktop-btn" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Contact Us</a>
+                
+                <!-- Hamburger Menu Button -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (3D Elements) -->
+    <section id="home" class="hero">
+        <div class="hero-bg">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+        </div>
+        <div class="container reveal">
+            <div class="tilt-wrapper" style="display: inline-block;">
+                <div class="tilt-card glass-panel" style="padding: 0.5rem 1.5rem; margin-bottom: 2rem; border-radius: 2rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+                    <span style="width: 8px; height: 8px; background: var(--brand-red); border-radius: 50%; display: inline-block; animation: subtlePulse 2s infinite;" class="tilt-content"></span>
+                    <span class="tilt-content" style="font-size: 0.9rem; font-weight: 600;">Solution For All Type Of Visas</span>
+                </div>
+            </div>
+            
+            <h1 style="perspective: 1000px;">
+                <div style="transform: translateZ(60px); display: inline-block; transition: transform 0.2s;" id="heroText1">Way2overseas</div> <br>
+                <span style="transform: translateZ(90px); display: inline-block; transition: transform 0.2s;" id="heroText2">Build Your Global Future.</span> <br>
+                <!-- <span style="transform: translateZ(90px); display: inline-block; transition: transform 0.2s;" id="heroText3">Way2overseas</span> -->
+            </h1>
+            
+            <p>Experience a premium, immersive journey to your dream university. We provide End-to-End services from University Application to Visa Processing.</p>
+            <a href="#services" class="btn-primary" style="padding: 1rem 2.5rem; font-size: 1.1rem; box-shadow: 0 10px 30px rgba(225, 29, 72, 0.3);">
+                Start Your Journey <i data-lucide="arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- About Stats -->
+    <section id="about" class="stats-section">
+        <div class="container">
+            <div class="stats-grid reveal">
+                <div class="stat-item"><h3>5+</h3><p>Years Experience</p></div>
+                <div class="stat-item"><h3>100%</h3><p>Genuine Assistance</p></div>
+                <div class="stat-item"><h3>10K+</h3><p>Success Stories</p></div>
+                <div class="stat-item"><h3>24/7</h3><p>Expert Support</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinations Section -->
+    <section id="destinations" class="destinations container">
+        <div class="section-header reveal">
+            <h2>Destinations We Offer</h2>
+            <p>Unlock the doors to the world's most prestigious academic environments.</p>
+        </div>
+        <div class="dest-grid">
+            <div class="tilt-wrapper reveal">
+                <div class="tilt-card dest-card">
+                    <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=800&q=80" alt="USA" class="tilt-bg">
+                    <div class="tilt-overlay"></div>
+                    <h3 class="tilt-content"><img src="https://flagcdn.com/w40/us.png" width="30" alt="USA Flag"> USA</h3>
+                    <p class="tilt-content">Global tech & research hub. Experience world-class Ivy League education and OPT opportunities.</p>
+                </div>
+            </div>
+            <div class="tilt-wrapper reveal">
+                <div class="tilt-card dest-card">
+                    <img src="https://images.unsplash.com/photo-1513635269975-5969336ac1fc?auto=format&fit=crop&w=800&q=80" alt="UK" class="tilt-bg">
+                    <div class="tilt-overlay"></div>
+                    <h3 class="tilt-content"><img src="https://flagcdn.com/w40/gb.png" width="30" alt="UK Flag"> UK</h3>
+                    <p class="tilt-content">Rich academic heritage. Shorter course durations with excellent post-study work opportunities.</p>
+                </div>
+            </div>
+            <div class="tilt-wrapper reveal">
+                <div class="tilt-card dest-card">
+                    <img src="https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=800&q=80" alt="Germany" class="tilt-bg">
+                    <div class="tilt-overlay"></div>
+                    <h3 class="tilt-content"><img src="https://flagcdn.com/w40/de.png" width="30" alt="Germany Flag"> Germany</h3>
+                    <p class="tilt-content">The engineering powerhouse of Europe offering zero or very low tuition fees at public universities.</p>
+                </div>
+            </div>
+            <div class="tilt-wrapper reveal">
+                <div class="tilt-card dest-card">
+                    <img src="https://images.unsplash.com/photo-1590135308696-6e27303f2e1a?auto=format&fit=crop&w=800&q=80" alt="Ireland" class="tilt-bg">
+                    <div class="tilt-overlay"></div>
+                    <h3 class="tilt-content"><img src="https://flagcdn.com/w40/ie.png" width="30" alt="Ireland Flag"> Ireland</h3>
+                    <p class="tilt-content">The Silicon Valley of Europe. Rapidly growing tech sector with highly welcoming post-study visas.</p>
+                </div>
+            </div>
+            <div class="tilt-wrapper reveal">
+                <div class="tilt-card dest-card">
+                    <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=800&q=80" alt="Europe" class="tilt-bg">
+                    <div class="tilt-overlay"></div>
+                    <h3 class="tilt-content"><i data-lucide="map" size="28"></i> Europe</h3>
+                    <p class="tilt-content">Diverse cultures, historic universities, and borderless Schengen travel across multiple nations.</p>
+                </div>
+            </div>
+            <div class="tilt-wrapper reveal">
+                <div class="tilt-card dest-card">
+                    <img src="https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&w=800&q=80" alt="Australia" class="tilt-bg">
+                    <div class="tilt-overlay"></div>
+                    <h3 class="tilt-content"><img src="https://flagcdn.com/w40/au.png" width="30" alt="Australia Flag"> Australia</h3>
+                    <p class="tilt-content">Excellence in research. Enjoy a sunny, vibrant student life with strong pathways to PR.</p>
+                </div>
+            </div>
+            <div class="tilt-wrapper reveal">
+                <div class="tilt-card dest-card">
+                    <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=800&q=80" alt="Canada" class="tilt-bg">
+                    <div class="tilt-overlay"></div>
+                    <h3 class="tilt-content"><img src="https://flagcdn.com/w40/ca.png" width="30" alt="Canada Flag"> Canada</h3>
+                    <p class="tilt-content">Highly PR friendly, offering an exceptional quality of life and extremely diverse, safe campuses.</p>
+                </div>
+            </div>
+            <div class="tilt-wrapper reveal">
+                <div class="tilt-card dest-card">
+                    <img src="https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?auto=format&fit=crop&w=800&q=80" alt="Netherlands" class="tilt-bg">
+                    <div class="tilt-overlay"></div>
+                    <h3 class="tilt-content"><img src="https://flagcdn.com/w40/nl.png" width="30" alt="Netherlands Flag"> Netherlands</h3>
+                    <p class="tilt-content">Innovative teaching methods, numerous English-taught programs, and a superb work-life balance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Visa Categories -->
+    <section id="visas" class="visas">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Visa Categories</h2>
+                <p>Specialized processing pathways tailored exactly to your global intentions.</p>
+            </div>
+            <div class="visas-grid">
+                <div class="tilt-wrapper reveal">
+                    <div class="tilt-card visa-card">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80" alt="Student Visa" class="tilt-bg">
+                        <div class="tilt-overlay"></div>
+                        <h3 class="tilt-content">Students Visa</h3>
+                        <p class="tilt-content">F1, Tier 4, and Subclass 500 processing. We architect your complete academic pathway, securing admits and seamlessly handling financial documentation.</p>
+                    </div>
+                </div>
+                <div class="tilt-wrapper reveal" style="transition-delay: 0.2s;">
+                    <div class="tilt-card visa-card">
+                        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1000&q=80" alt="Tourist Visa" class="tilt-bg">
+                        <div class="tilt-overlay"></div>
+                        <h3 class="tilt-content">Tourists Visa</h3>
+                        <p class="tilt-content">B1/B2 and Schengen visas simplified. Hassle-free processing, itinerary planning, and strict compliance for global exploration.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Services Section -->
+    <!-- <section id="services" class="services container">
+        <div class="section-header reveal">
+            <h2>Our Core Services</h2>
+            <p>Premium guidance engineered to eliminate friction from your global journey.</p>
+        </div>
+        <div class="services-grid">
+            <div class="tilt-wrapper reveal">
+                <div class="tilt-card glass-panel service-card-3d">
+                    <div class="service-icon tilt-content"><i data-lucide="piggy-bank" size="32"></i></div>
+                    <h3 class="tilt-content">Cost-Effective</h3>
+                    <p class="tilt-content">Premium guidance without the premium price tag. We maintain a highly transparent fee structure with zero hidden charges.</p>
+                </div>
+            </div>
+            <div class="tilt-wrapper reveal" style="transition-delay: 0.1s;">
+                <div class="tilt-card glass-panel service-card-3d">
+                    <div class="service-icon tilt-content"><i data-lucide="file-check-2" size="32"></i></div>
+                    <h3 class="tilt-content">Visa Assistance</h3>
+                    <p class="tilt-content">End-to-end legal compliance, meticulous document preparation, and extensive mock interviews to guarantee approval.</p>
+                </div>
+            </div>
+            <div class="tilt-wrapper reveal" style="transition-delay: 0.2s;">
+                <div class="tilt-card glass-panel service-card-3d">
+                    <div class="service-icon tilt-content"><i data-lucide="zap" size="32"></i></div>
+                    <h3 class="tilt-content">Faster Processing</h3>
+                    <p class="tilt-content">Streamlined documentation pipelines and direct university tie-ups ensure quicker turnarounds for offers and visas.</p>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Bento Grid Services Section -->
+    <section class="bento-section">
+        <div class="container">
+            <div class="section-header reveal" style="text-align: left; margin-bottom: 3rem;">
+                <h2>End-to-End Support</h2>
+                <p style="margin: 0;">We simplify the complex study abroad process into a smooth, manageable journey.</p>
+            </div>
+
+            <div class="bento-grid">
+                <div class="bento-card large reveal">
+                    <div class="bento-icon"><i data-lucide="book-open"></i></div>
+                    <h3>Visa Processing</h3>
+                    <p>Our flagship service. We hold an industry-leading visa success rate, providing meticulous documentation review, mock interviews, and submission strategies.</p>
+                </div>
+                <div class="bento-card reveal" style="transition-delay: 0.1s;">
+                    <div class="bento-icon accent-red"><i data-lucide="library"></i></div>
+                    <h3>University Selection</h3>
+                    <p>Data-driven matching to find institutions that align perfectly with your profile.</p>
+                </div>
+                <div class="bento-card reveal">
+                    <div class="bento-icon accent-green"><i data-lucide="circle-dollar-sign"></i></div>
+                    <h3>Scholarships & Loans</h3>
+                    <p>Financial planning assistance, including exclusive scholarship access and education loan processing.</p>
+                </div>
+                <div class="bento-card large dark-theme reveal" style="transition-delay: 0.1s;">
+                    <i data-lucide="plane" class="bg-watermark"></i>
+                    <div class="bento-icon"><i data-lucide="map-pinned"></i></div>
+                    <h3>Pre-Departure & Accommodation</h3>
+                    <p>Your journey doesn't end with a visa. We assist with flight bookings, premium student accommodation, and cultural orientation before you fly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Services Block -->
+    <section id="services" class="premium-services">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Our Premium Services</h2>
+                <p>End-to-end support engineered to eliminate friction from your study abroad journey.</p>
+            </div>
+            <div class="grid-cards">
+                <div class="glass-panel service-card reveal">
+                    <div class="icon"><i data-lucide="compass"></i></div>
+                    <h3>Expert Counselling</h3>
+                    <p>Personalized sessions to align your career goals with the right academic pathway.</p>
+                </div>
+                <div class="glass-panel service-card reveal" style="transition-delay: 0.1s;">
+                    <div class="icon"><i data-lucide="library"></i></div>
+                    <h3>University Selection</h3>
+                    <p>AI-assisted matching combined with human curation for the perfect university fit.</p>
+                </div>
+                <div class="glass-panel service-card reveal" style="transition-delay: 0.2s;">
+                    <div class="icon"><i data-lucide="file-check"></i></div>
+                    <h3>Visa Processing</h3>
+                    <p>High-success visa filing, documentation review, and extensive mock interviews.</p>
+                </div>
+                <div class="glass-panel service-card reveal">
+                    <div class="icon"><i data-lucide="award"></i></div>
+                    <h3>Scholarships</h3>
+                    <p>Identify and secure global scholarships and financial aid opportunities.</p>
+                </div>
+                <div class="glass-panel service-card reveal" style="transition-delay: 0.1s;">
+                    <div class="icon"><i data-lucide="wallet"></i></div>
+                    <h3>Education Loans</h3>
+                    <p>Fast-track approvals through our trusted banking and financial partners.</p>
+                </div>
+                <div class="glass-panel service-card reveal" style="transition-delay: 0.2s;">
+                    <div class="icon"><i data-lucide="plane-takeoff"></i></div>
+                    <h3>Pre-Departure</h3>
+                    <p>Complete guidance on accommodation, forex, flight booking, and cultural transition.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Process Timeline -->
+    <section id="process" class="process">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>The Way2Overseas Method</h2>
+                <p>A streamlined, transparent pipeline to your dream university.</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot">1</div>
+                    <div class="glass-panel timeline-content">
+                        <h3 style="font-weight: 700; color: var(--text-primary);">Profile Evaluation</h3>
+                        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Deep dive into your academic history, career goals, and financial planning.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot">2</div>
+                    <div class="glass-panel timeline-content">
+                        <h3 style="font-weight: 700; color: var(--text-primary);">Course & University Selection</h3>
+                        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Shortlisting programs that offer the highest ROI and align with your profile.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot">3</div>
+                    <div class="glass-panel timeline-content">
+                        <h3 style="font-weight: 700; color: var(--text-primary);">Application & Essays</h3>
+                        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Crafting compelling SOPs, gathering LORs, and ensuring flawless application submissions.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot">4</div>
+                    <div class="glass-panel timeline-content">
+                        <h3 style="font-weight: 700; color: var(--text-primary);">Offer Letter & Visa</h3>
+                        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Securing admits and navigating complex visa documentation with precision.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Success Slider -->
+    <section id="reviews" class="slider-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>What Our Clients Say</h2>
+                <p>Trusted by thousands of students who achieved their global dreams.</p>
+            </div>
+            <div class="slider-viewport reveal">
+                <div class="slider-track" id="track">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+            <div class="controls-container reveal">
+                <button class="nav-btn" id="prevBtn" aria-label="Previous testimonial"><i data-lucide="arrow-left"></i></button>
+                <div class="dots" id="dotsContainer"></div>
+                <button class="nav-btn" id="nextBtn" aria-label="Next testimonial"><i data-lucide="arrow-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Start Your Journey</h2>
+                <p>Get in touch with our expert counsellors today.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info reveal">
+                    <div class="contact-card">
+                        <div class="icon-wrapper"><i data-lucide="map-pin" style="color: var(--brand-red);"></i></div>
+                        <div>
+                            <h4 style="font-size: 1.1rem; margin-bottom: 0.2rem; font-weight: 700;">Our Office</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.95rem;">3rd Floor, Opp: Vani Mahal, D Mart Road, Nagunta Layout, Nellore-524003, AP, India</p>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="icon-wrapper"><i data-lucide="phone" style="color: var(--brand-red);"></i></div>
+                        <div>
+                            <h4 style="font-size: 1.1rem; margin-bottom: 0.2rem; font-weight: 700;">Phone</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.95rem;">+91 9700017726</p>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="icon-wrapper"><i data-lucide="mail" style="color: var(--brand-red);"></i></div>
+                        <div>
+                            <h4 style="font-size: 1.1rem; margin-bottom: 0.2rem; font-weight: 700;">Email</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.95rem;">info@way2overseas.com</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass-panel reveal" style="transition-delay: 0.2s;">
+    <form id="studyForm" class="contact-form">
+        <div style="display: flex; gap: 1.5rem;">
+            <input type="text" id="firstName" placeholder="First Name" required style="flex: 1;">
+            <input type="text" id="lastName" placeholder="Last Name" required style="flex: 1;">
+        </div>
+        <input type="email" id="email" placeholder="Email Address" required>
+        <input type="tel" id="phone" placeholder="Phone Number" required>
+        <select id="destination" required>
+            <option value="" disabled selected>Preferred Study Destination</option>
+            <option value="UK">UK</option>
+            <option value="USA">USA</option>
+            <option value="Canada">Canada</option>
+            <option value="Australia">Australia</option>
+            <option value="Europe">Europe</option>
+        </select>
+        <textarea id="message" rows="4" placeholder="Type your message here..."></textarea>
+        <button type="submit" class="btn-primary" style="justify-content: center; padding: 1rem; font-size: 1.05rem;">
+            Submit Request <i data-lucide="send" size="18"></i>
+        </button>
+    </form>
+</div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container faq-container">
+            <div class="section-header reveal">
+                <h2>Frequently Asked Questions</h2>
+                <p>Clear answers to help you make informed decisions.</p>
+            </div>
+            <div class="faq-list reveal">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        What is the ideal time to start the application process?
+                        <i data-lucide="chevron-down" class="icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We recommend starting at least 9-12 months before your intended intake. This allows ample time for exam preparation (IELTS/TOEFL/GRE), profile building, and documentation.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Do you help with scholarships and financial aid?
+                        <i data-lucide="chevron-down" class="icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes, absolutely. Our counsellors identify university-specific and government scholarships you are eligible for, and we guide you through the essay and application process for them.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Can I study abroad with a study gap?
+                        <i data-lucide="chevron-down" class="icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes. Many universities accept study gaps if they are justified properly (e.g., work experience, medical reasons, or skill development). We help you draft an honest and compelling explanation in your SOP.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Why choose Way2Overseas in Nellore?
+                        <i data-lucide="chevron-down" class="icon"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We bring international-standard counselling right to Nellore. With an exceptional visa success rate, direct university tie-ups, and a highly personalized approach, we eliminate the need to travel to metro cities for premium guidance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="#" class="logo" style="margin-bottom: 1rem; display: inline-flex;">
+                        <img src="/way2overseas/img/logo.png" alt="Way2Overseas Logo" style="width: 100px; height: auto;"> Way2Overseas
+                    </a>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; max-width: 250px;">Premium Immigration Consultant Agency. We provide End to End Services until you reach your dreamed Destination.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#services">Our Services</a></li>
+                        <li><a href="#process">Process</a></li>
+                        <li><a href="#destinations">Destinations</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Top Destinations</h4>
+                    <ul>
+                        <li><a href="#destinations">Study in USA</a></li>
+                        <li><a href="#destinations">Study in UK</a></li>
+                        <li><a href="#destinations">Study in Canada</a></li>
+                        <li><a href="#destinations">Study in Europe</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul style="color: var(--text-secondary); font-size: 0.9rem;">
+                        <li>3rd Floor, Opp: Vani Mahal, D Mart Road, Nagunta Layout, Nellore-524003, AP, India</li>
+                        <li style="margin-top: 0.5rem;">+91 9700017726</li>
+                        <li>info@way2overseas.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Way2overseas Consultancy. All rights reserved. Best Visa Immigrations Services in Nellore.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="scrollToTopBtn" aria-label="Scroll back to top">
+        <i data-lucide="arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script>
+
+        document.getElementById('studyForm').addEventListener('submit', function(event) {
+    // 1. Prevent the default form submission (page reload)
+    event.preventDefault(); 
+
+    // 2. Get the values from the form inputs
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const destination = document.getElementById('destination').value;
+    const message = document.getElementById('message').value;
+
+    // 3. Format the message for WhatsApp (using * for bold text in WhatsApp)
+    const whatsappMessage = `*New Study Destination Inquiry*
+*Name:* ${firstName} ${lastName}
+*Email:* ${email}
+*Phone:* ${phone}
+*Destination:* ${destination}
+*Message:* ${message ? message : 'No additional message provided.'}`;
+
+    // 4. URL Encode the text so it can be passed safely in a web link
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+
+    // 5. Define the WhatsApp number 
+    // IMPORTANT: WhatsApp requires the country code without any '+' or '00' 
+    // Assuming this is an Indian number (+91), the format should be 919700017726
+    const whatsappNumber = "919700017726"; 
+
+    // 6. Create the WhatsApp API URL
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+    // 7. Open WhatsApp in a new tab/window
+    window.open(whatsappUrl, '_blank');
+    
+    // Optional: Reset the form after submission or show a success alert
+    // this.reset();
+    // alert("Redirecting to WhatsApp...");
+});
+
+        // 1. Initialize Icons
+        lucide.createIcons();
+
+        // 2. Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+
+        // 3. Mobile Navigation Toggle Logic
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.querySelector('.nav-links');
+        const menuIcon = mobileMenuBtn.querySelector('i');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            if (navLinks.classList.contains('active')) {
+                menuIcon.setAttribute('data-lucide', 'x');
+            } else {
+                menuIcon.setAttribute('data-lucide', 'menu');
+            }
+            lucide.createIcons(); 
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuIcon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            });
+        });
+
+        // 4. Floating Back to Top Button Logic
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 5. 3D Mouse Move Parallax / Tilt Effect
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth - e.pageX) / 50;
+            const y = (window.innerHeight - e.pageY) / 50;
+            const hero1 = document.getElementById('heroText1');
+            const hero2 = document.getElementById('heroText2');
+            if(hero1 && hero2) {
+                hero1.style.transform = `translateZ(60px) translate(${x}px, ${y}px)`;
+                hero2.style.transform = `translateZ(90px) translate(${x * 1.5}px, ${y * 1.5}px)`;
+            }
+        });
+
+        // 3D Card Tilt Logic
+        const tiltCards = document.querySelectorAll('.tilt-card');
+        tiltCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; 
+                const y = e.clientY - rect.top;  
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -10;
+                const rotateY = ((x - centerX) / centerX) * 10;
+                
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+                card.style.transition = `transform 0.5s ease-out`;
+            });
+            
+            card.addEventListener('mouseenter', () => {
+                card.style.transition = `none`; 
+            });
+        });
+
+        // 6. Scroll Reveal Animation
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // 7. FAQ Accordion Logic
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const isActive = item.classList.contains('active');
+                
+                document.querySelectorAll('.faq-item').forEach(faq => {
+                    faq.classList.remove('active');
+                });
+                
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // 8. Testimonial Slider Data 
+        const testimonials = [
+            { name: "Keerthana", course: "MSc in global health care management", image: "https://i.pravatar.cc/150?img=44", review: "Best Consultancy for Studying Abroad! Way2Overseas provided excellent guidance on choosing the right university and securing my student visa. Their expertise and dedication made the entire process effortless." },
+            { name: "Teja", course: "MSc in global health care management", image: "https://i.pravatar.cc/150?img=11", review: "Trustworthy and Reliable! Applying for a visa can be complicated, but they made it easy for me. Their support and attention to detail were impressive." },
+            { name: "Sreenu", course: "MSc in Data Science", image: "https://i.pravatar.cc/150?img=15", review: "A Seamless Visa Process! They made my dream of studying abroad a reality! Their team guided me through every step of the visa process, ensuring a hassle-free experience." }
+        ];
+
+        const track = document.getElementById('track');
+        const dotsContainer = document.getElementById('dotsContainer');
+        let currentIndex = 0;
+
+        function buildSlider() {
+            testimonials.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = `testimonial-card ${index === 0 ? 'active' : ''}`;
+                card.innerHTML = `
+                    <div class="tilt-wrapper" style="height:100%;">
+                        <div class="tilt-card glass-panel test-panel">
+                            <i data-lucide="quote" class="quote-icon tilt-content"></i>
+                            <p class="review-text tilt-content">"${item.review}"</p>
+                            <div class="student-info tilt-content">
+                                <img src="${item.image}" alt="${item.name}" class="student-photo">
+                                <div class="student-details">
+                                    <h4>${item.name}</h4>
+                                    <div style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem;">
+                                        <i data-lucide="graduation-cap" style="width: 14px; height: 14px;"></i> ${item.course}
+                                    </div>
+                                </div>
+                                <div class="visa-badge">
+                                    <i data-lucide="check-circle-2" style="width: 16px; height: 16px;"></i> Visa Approved
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                track.appendChild(card);
+                
+                const dot = document.createElement('div');
+                dot.className = `dot ${index === 0 ? 'active' : ''}`;
+                dot.addEventListener('click', () => updateSlider(index));
+                dotsContainer.appendChild(dot);
+            });
+            lucide.createIcons();
+            
+            const newTiltCards = track.querySelectorAll('.tilt-card');
+            newTiltCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left, y = e.clientY - rect.top;
+                    const rotateX = (((y - rect.height/2) / (rect.height/2)) * -5);
+                    const rotateY = (((x - rect.width/2) / (rect.width/2)) * 5);
+                    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                });
+                card.addEventListener('mouseleave', () => { card.style.transform = `rotateX(0deg) rotateY(0deg)`; card.style.transition = `transform 0.5s ease-out`; });
+                card.addEventListener('mouseenter', () => { card.style.transition = `none`; });
+            });
+        }
+
+        function updateSlider(index) {
+            currentIndex = index;
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            document.querySelectorAll('.testimonial-card').forEach((card, idx) => idx === currentIndex ? card.classList.add('active') : card.classList.remove('active'));
+            document.querySelectorAll('.dot').forEach((dot, idx) => idx === currentIndex ? dot.classList.add('active') : dot.classList.remove('active'));
+        }
+
+        document.getElementById('nextBtn').addEventListener('click', () => updateSlider(currentIndex === testimonials.length - 1 ? 0 : currentIndex + 1));
+        document.getElementById('prevBtn').addEventListener('click', () => updateSlider(currentIndex === 0 ? testimonials.length - 1 : currentIndex - 1));
+        
+        buildSlider();
+
+        // 9. Dark/Light Theme Toggle
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.setAttribute('data-theme', 'dark');
+            themeIcon.setAttribute('data-lucide', 'sun');
+            lucide.createIcons();
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const newTheme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeIcon.setAttribute('data-lucide', newTheme === 'dark' ? 'sun' : 'moon');
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
