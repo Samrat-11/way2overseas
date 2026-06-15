@@ -319,7 +319,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
         
         body { 
             font-family: 'Inter', sans-serif; 
@@ -327,6 +327,7 @@
             color: var(--text-primary); 
             line-height: 1.6; 
             overflow-x: hidden; 
+            width: 100%;
             transition: background-color 0.4s ease, color 0.4s ease; 
         }
 
@@ -657,12 +658,39 @@
         }
         
         @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
             .mobile-menu-btn { display: flex; }
             .desktop-btn { display: none !important; }
             
-            nav { border-radius: 12px; }
+            nav,
+            nav.scrolled {
+                background: var(--glass-bg);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid var(--border-color);
+                box-shadow: var(--shadow-float);
+                left: 10px;
+                right: 10px;
+                width: auto;
+                padding: 0.75rem 0.9rem;
+                border-radius: 12px;
+            }
+            .logo {
+                min-width: 0;
+                font-size: 1.15rem;
+                gap: 0.4rem;
+                letter-spacing: 0;
+                white-space: nowrap;
+            }
+            .logo img { width: 78px !important; }
+            .nav-actions { flex: 0 0 auto; gap: 0.5rem; }
+            .theme-toggle,
+            .mobile-menu-btn {
+                width: 38px;
+                height: 38px;
+            }
             .nav-links { 
-                position: absolute; top: 100%; left: 0; width: 100%;
+                position: absolute; top: 100%; left: 0; right: 0; width: 100%;
                 background: var(--surface-color); flex-direction: column; padding: 2rem 0;
                 border-radius: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-float);
                 opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; z-index: 99;
@@ -670,9 +698,83 @@
             .nav-links.active { opacity: 1; visibility: visible; transform: translateY(10px); }
             
             .mobile-cta { display: flex; margin-top: 1rem; width: 80%; }
+            .section-header { margin-bottom: 2.5rem; }
+            .section-header h2 { font-size: clamp(2rem, 9vw, 2.5rem); letter-spacing: 0; }
+            .section-header p { font-size: 1rem; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
             .grid-cards, .bento-grid, .contact-grid { grid-template-columns: 1fr; }
             .bento-card.large { grid-column: span 1; }
+            .tilt-wrapper { perspective: none; transform-style: flat; min-width: 0; }
+            .tilt-card { transform-style: flat; }
+            .tilt-content { transform: none; }
+            .visas { padding: 5rem 0; }
+            .visas-grid {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+            .visa-card {
+                min-height: 360px;
+                height: auto;
+                padding: 2rem;
+                border-radius: 1.25rem;
+            }
+            .visa-card h3 { font-size: 2rem; line-height: 1.1; }
+            .visa-card p { font-size: 1rem; max-width: none; }
+            .slider-section { padding: 5rem 0; }
+            .slider-viewport {
+                max-width: 100%;
+                padding: 0;
+                border-radius: 1rem;
+            }
+            .slider-track { min-width: 0; }
+            .testimonial-card {
+                flex: 0 0 100%;
+                min-width: 0;
+                padding: 0;
+                transform: none;
+            }
+            .testimonial-card.active { transform: none; }
+            .test-panel {
+                padding: 1.5rem;
+                gap: 1.25rem;
+                border-radius: 1rem;
+            }
+            .quote-icon {
+                width: 36px;
+                height: 36px;
+            }
+            .review-text {
+                font-size: 1rem;
+                line-height: 1.55;
+                overflow-wrap: anywhere;
+            }
+            .student-info {
+                display: grid;
+                grid-template-columns: 52px minmax(0, 1fr);
+                gap: 0.9rem;
+                align-items: center;
+                padding-top: 1.25rem;
+            }
+            .student-photo {
+                width: 52px;
+                height: 52px;
+            }
+            .student-details { min-width: 0; }
+            .student-details > div:last-child {
+                display: block !important;
+                overflow-wrap: anywhere;
+            }
+            .visa-badge {
+                grid-column: 1 / -1;
+                justify-self: start;
+                margin-left: 0;
+                padding: 0.45rem 0.75rem;
+                font-size: 0.8rem;
+            }
+            .controls-container {
+                gap: 1.25rem;
+                margin-top: 2rem;
+            }
             
             .timeline::before { left: 30px; }
             .timeline-item { flex-direction: column !important; align-items: flex-start; padding-left: 80px; }
@@ -686,6 +788,18 @@
         }
         
         @media (max-width: 480px) {
+            nav,
+            nav.scrolled {
+                padding: 0.65rem 0.75rem;
+            }
+            .logo { font-size: 1rem; }
+            .logo img { width: 64px !important; }
+            .nav-actions { gap: 0.35rem; }
+            .theme-toggle,
+            .mobile-menu-btn {
+                width: 34px;
+                height: 34px;
+            }
             .footer-grid, .dest-grid { grid-template-columns: 1fr; }
             .hero h1 { font-size: 2.5rem; }
             .stats-grid { grid-template-columns: 1fr; }
@@ -1405,21 +1519,21 @@
 
             <!-- Section 9: Success Stories (Full Width) -->
             <section style="margin-bottom: 6rem; padding: 3rem 0;">
-                <h2 style="font-size: 2rem; color: var(--brand-red); margin-bottom: 1rem;">Success Stories</h2>
-                <p style="color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 2rem;">Real experiences from Indian students who achieved their dreams:</p>
+                <h2 style="font-size: 2rem; color: var(--brand-red); margin-bottom: 1rem;"></h2>
+                <p style="color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 2rem;"></p>
                 <div class="success-stories-grid" id="cp-success-stories"></div>
             </section>
 
             <!-- Section 10: Visa & FAQ (Content Left | Stats Right) -->
             <section class="premium-content-section reverse">
                 <div class="premium-content-text">
-                    <h2>Visa & Immigration</h2>
+                    <h2></h2>
                     <div id="cp-visa" style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; margin-bottom: 2rem;"></div>
-                    <h3 style="color: var(--brand-red); margin-top: 2rem; margin-bottom: 1rem;">Frequently Asked Questions</h3>
+                    <h3 style="color: var(--brand-red); margin-top: 2rem; margin-bottom: 1rem;"></h3>
                     <div id="cp-faqs"></div>
                 </div>
                 <div class="premium-content-image">
-                    <img id="cp-img-8" src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80" alt="Visa Process">
+                    <!-- <img id="cp-img-8" src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80" alt="Visa Process"> -->
                 </div>
             </section>
 
@@ -1440,7 +1554,7 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <a href="#" class="logo" style="margin-bottom: 1rem; display: inline-flex;" onclick="closeCountryPage()">
-                        <i data-lucide="plane-takeoff" class="logo-icon"></i>
+                        <img src="./img/logo.png" alt="Way2Overseas Logo" style="width: 100px; height: auto;">
                         Way2Overseas
                     </a>
                     <p style="color: var(--text-secondary); font-size: 0.9rem; max-width: 250px;">Premium Immigration Consultant Agency. We provide End to End Services until you reach your dreamed Destination.</p>
@@ -1602,20 +1716,20 @@
                     { name: "Chicago, IL", desc: "Financial and consulting hub. Home to McKinsey, Deloitte offices. Architecture-focused with affordable living. Strong on consulting and finance." , img: "https://images.unsplash.com/photo-1493326488544-c4b1178c1b21?auto=format&fit=crop&w=400&q=80" }
                 ],
                 research: "<p>The US leads in global research and development with a culture of innovation deeply embedded in academia.</p><p><strong>Research Opportunities:</strong></p><ul><li><strong>Funded Assistantships:</strong> Most PhD programs offer full tuition + monthly stipend ($18K-$25K/year) in exchange for teaching or research</li><li><strong>STEM Research Focus:</strong> Cutting-edge labs in AI, quantum computing, biomedical engineering at institutions like Stanford, MIT, Harvard</li><li><strong>Undergraduate Research:</strong> Paid summer research internships (REU - Research Experiences for Undergraduates)</li><li><strong>Innovation Hubs:</strong> Stanford D.School, MIT Media Lab offer transformative projects</li><li><strong>Conference Opportunities:</strong> Easy access to present at international conferences</li></ul>",
-                successStories: [
-                    { initials: "RS", name: "Rajagopal Sharma", detail: "Software Engineer at Google, Stanford MS", story: "Started at a mid-tier Indian college, worked hard, scored 720 in GMAT, got into Stanford. Now earning $350K+ at Google with stock options. Sponsored H1B visa within 2 years." },
-                    { initials: "AS", name: "Anusha Singh", detail: "VP at Goldman Sachs, NYU MBA", story: "MBA from NYU Stern, leveraged internship at GS, converted to full-time. Now in leadership managing teams of 50+. Fastest to VP in her cohort." },
-                    { initials: "PK", name: "Priya Kamat", detail: "CEO of AI Startup, MIT", story: "Started as MS student at MIT, built AI product with classmates, launched startup, raised $50M Series A funding. Teams across 3 countries now." },
-                    { initials: "DG", name: "Deepak Gupta", detail: "Senior Software Architect, Apple", story: "Engineers from India got into UIUC MS program, excelled, interned at Apple, got permanent offer. Green card approved in 4 years." }
-                ],
-                visa: "<strong>Visa Type:</strong> F-1 Student Visa<br><strong>Processing Time:</strong> 1-2 weeks<br><strong>Key Requirements:</strong><ul><li>✓ Form I-20 from an SEVP-approved school</li><li>✓ SEVIS fee payment ($200)</li><li>✓ DS-160 form (online application)</li><li>✓ Successful personal interview demonstrating non-immigrant intent</li><li>✓ Proof of financial capability (usually ~$40K-$80K depending on university)</li><li>✓ Passport valid for at least 6 months</li></ul><strong>Post-Study Work:</strong> 3-year Optional Practical Training (OPT) for STEM graduates",
-                faqs: [
-                    { q: "What's the cost breakdown for studying in the USA?", a: "Total cost: $50K-$100K/year. This includes tuition ($20K-$60K), accommodation ($8K-$15K), food ($3K-$6K), and miscellaneous ($3K-$5K). Many universities offer scholarships covering partial or full tuition." },
-                    { q: "Can I work while studying?", a: "On-campus work (20hrs/week) is allowed during academic term and 40hrs/week during breaks. Off-campus work requires CPT authorization from your designated school official." },
-                    { q: "How difficult is the visa interview?", a: "Visa denial rates for Indians have dropped significantly. With solid university admit, financial backing, and clear intent to return (ties to India), approval is likely." },
-                    { q: "Is it hard to get a job after graduation?", a: "US universities have strong placement networks. Most STEM graduates secure jobs within 3-6 months. Tech salaries are extremely competitive." },
-                    { q: "Can I pursue PR after studying?", a: "Yes. Many companies sponsor H1B visas, which can lead to permanent residency (EB-2 or EB-3). Timeline: 3-7 years typically." }
-                ]
+                // successStories: [
+                //     { initials: "RS", name: "Rajagopal Sharma", detail: "Software Engineer at Google, Stanford MS", story: "Started at a mid-tier Indian college, worked hard, scored 720 in GMAT, got into Stanford. Now earning $350K+ at Google with stock options. Sponsored H1B visa within 2 years." },
+                //     { initials: "AS", name: "Anusha Singh", detail: "VP at Goldman Sachs, NYU MBA", story: "MBA from NYU Stern, leveraged internship at GS, converted to full-time. Now in leadership managing teams of 50+. Fastest to VP in her cohort." },
+                //     { initials: "PK", name: "Priya Kamat", detail: "CEO of AI Startup, MIT", story: "Started as MS student at MIT, built AI product with classmates, launched startup, raised $50M Series A funding. Teams across 3 countries now." },
+                //     { initials: "DG", name: "Deepak Gupta", detail: "Senior Software Architect, Apple", story: "Engineers from India got into UIUC MS program, excelled, interned at Apple, got permanent offer. Green card approved in 4 years." }
+                // ],
+                // visa: "<strong>Visa Type:</strong> F-1 Student Visa<br><strong>Processing Time:</strong> 1-2 weeks<br><strong>Key Requirements:</strong><ul><li>✓ Form I-20 from an SEVP-approved school</li><li>✓ SEVIS fee payment ($200)</li><li>✓ DS-160 form (online application)</li><li>✓ Successful personal interview demonstrating non-immigrant intent</li><li>✓ Proof of financial capability (usually ~$40K-$80K depending on university)</li><li>✓ Passport valid for at least 6 months</li></ul><strong>Post-Study Work:</strong> 3-year Optional Practical Training (OPT) for STEM graduates",
+                // faqs: [
+                //     { q: "What's the cost breakdown for studying in the USA?", a: "Total cost: $50K-$100K/year. This includes tuition ($20K-$60K), accommodation ($8K-$15K), food ($3K-$6K), and miscellaneous ($3K-$5K). Many universities offer scholarships covering partial or full tuition." },
+                //     { q: "Can I work while studying?", a: "On-campus work (20hrs/week) is allowed during academic term and 40hrs/week during breaks. Off-campus work requires CPT authorization from your designated school official." },
+                //     { q: "How difficult is the visa interview?", a: "Visa denial rates for Indians have dropped significantly. With solid university admit, financial backing, and clear intent to return (ties to India), approval is likely." },
+                //     { q: "Is it hard to get a job after graduation?", a: "US universities have strong placement networks. Most STEM graduates secure jobs within 3-6 months. Tech salaries are extremely competitive." },
+                //     { q: "Can I pursue PR after studying?", a: "Yes. Many companies sponsor H1B visas, which can lead to permanent residency (EB-2 or EB-3). Timeline: 3-7 years typically." }
+                // ]
             },
             uk: {
                 name: "UK",
@@ -1653,20 +1767,20 @@
                     { name: "Bristol", desc: "Creative hub, aerospace industry, strong engineering schools. More affordable, excellent quality of life.", img: "https://images.unsplash.com/photo-1517491851685-e57c5d0b0f4a?auto=format&fit=crop&w=400&q=80" }
                 ],
                 research: "<p>UK universities are research-intensive with significant government and private funding.</p><p><strong>Research Opportunities:</strong></p><ul><li><strong>PhD Funding:</strong> Most PhD programs offer full funding (tuition + £17K-£25K/year stipend)</li><li><strong>Research Assistant Positions:</strong> Paid research roles during studies</li><li><strong>AHRC/ESRC Grants:</strong> Government-funded research in humanities and social sciences</li><li><strong>Industry Collaborations:</strong> Strong partnerships with companies like Microsoft, Google, Rolls-Royce</li><li><strong>Publication Culture:</strong> Encourages early publication and conference attendance</li></ul>",
-                successStories: [
-                    { initials: "NN", name: "Nikhil Nair", detail: "Manager at Accenture, Oxford MBA", story: "Worked 3 years in India, got into Oxford MBA with scholarship, interned at Accenture, got permanent offer post-graduation. Now earning £80K+." },
-                    { initials: "ST", name: "Stuti Toppo", detail: "Senior Advisor at Goldman Sachs, LSE MSc", story: "LSE MSc Finance, landed internship at GS London, converted to full-time. Now managing emerging markets portfolio." },
-                    { initials: "AR", name: "Arjun Reeves", detail: "PhD Researcher at Cambridge, Imperial MSc", story: "Imperial MSc Materials Science, published papers, got fully-funded PhD at Cambridge. Research in sustainable materials." },
-                    { initials: "PA", name: "Pooja Andani", detail: "Director at McKinsey, Oxford", story: "Oxford MBA grad, joined McKinsey through graduate scheme, made senior partner track in 5 years." }
-                ],
-                visa: "<strong>Visa Type:</strong> Student Route (formerly Tier 4)<br><strong>Processing Time:</strong> 2-3 weeks<br><strong>Key Requirements:</strong><ul><li>✓ Confirmation of Acceptance for Studies (CAS) letter from university</li><li>✓ Proof of English proficiency (IELTS/PTE/Duolingo)</li><li>✓ Proof of funds (strict 28-day proof requirement)</li><li>✓ Valid passport</li><li>✓ TB test (if required)</li></ul><strong>Post-Study Work:</strong> 2-year Graduate Route Visa (3 years for PhDs)",
-                faqs: [
-                    { q: "Why choose UK over USA?", a: "Shorter duration (1-year Masters vs 2 years), lower cost, easy transition to Europe, strong post-study work visa. Great for career shifters." },
-                    { q: "Is a 1-year Master's degree valued?", a: "Absolutely. UK 1-year Master's is respected globally. Intensity and rigor compensate for shorter duration. Many Fortune 500 hiring managers have UK degrees." },
-                    { q: "Cost comparison: UK vs USA?", a: "UK typically costs £40K-£60K total (tuition + living for 1 year). USA costs $60K-$100K+ per year. UK is 30-40% cheaper." },
-                    { q: "Can I work after my studies end?", a: "Yes! Graduate Route Visa allows 2 years of work post-graduation. This is huge for visa sponsorship and PR pathways." },
-                    { q: "Difficulty of securing internships?", a: "Very feasible. Summer internships are common. Many students have internships lined up by end of first semester." }
-                ]
+                // successStories: [
+                //     { initials: "NN", name: "Nikhil Nair", detail: "Manager at Accenture, Oxford MBA", story: "Worked 3 years in India, got into Oxford MBA with scholarship, interned at Accenture, got permanent offer post-graduation. Now earning £80K+." },
+                //     { initials: "ST", name: "Stuti Toppo", detail: "Senior Advisor at Goldman Sachs, LSE MSc", story: "LSE MSc Finance, landed internship at GS London, converted to full-time. Now managing emerging markets portfolio." },
+                //     { initials: "AR", name: "Arjun Reeves", detail: "PhD Researcher at Cambridge, Imperial MSc", story: "Imperial MSc Materials Science, published papers, got fully-funded PhD at Cambridge. Research in sustainable materials." },
+                //     { initials: "PA", name: "Pooja Andani", detail: "Director at McKinsey, Oxford", story: "Oxford MBA grad, joined McKinsey through graduate scheme, made senior partner track in 5 years." }
+                // ],
+                // visa: "<strong>Visa Type:</strong> Student Route (formerly Tier 4)<br><strong>Processing Time:</strong> 2-3 weeks<br><strong>Key Requirements:</strong><ul><li>✓ Confirmation of Acceptance for Studies (CAS) letter from university</li><li>✓ Proof of English proficiency (IELTS/PTE/Duolingo)</li><li>✓ Proof of funds (strict 28-day proof requirement)</li><li>✓ Valid passport</li><li>✓ TB test (if required)</li></ul><strong>Post-Study Work:</strong> 2-year Graduate Route Visa (3 years for PhDs)",
+                // faqs: [
+                //     { q: "Why choose UK over USA?", a: "Shorter duration (1-year Masters vs 2 years), lower cost, easy transition to Europe, strong post-study work visa. Great for career shifters." },
+                //     { q: "Is a 1-year Master's degree valued?", a: "Absolutely. UK 1-year Master's is respected globally. Intensity and rigor compensate for shorter duration. Many Fortune 500 hiring managers have UK degrees." },
+                //     { q: "Cost comparison: UK vs USA?", a: "UK typically costs £40K-£60K total (tuition + living for 1 year). USA costs $60K-$100K+ per year. UK is 30-40% cheaper." },
+                //     { q: "Can I work after my studies end?", a: "Yes! Graduate Route Visa allows 2 years of work post-graduation. This is huge for visa sponsorship and PR pathways." },
+                //     { q: "Difficulty of securing internships?", a: "Very feasible. Summer internships are common. Many students have internships lined up by end of first semester." }
+                // ]
             },
             germany: {
                 name: "Germany",
@@ -1681,9 +1795,9 @@
                 career: "<p>Germany offers an <strong>18-month post-study Job Seeker Visa</strong>. With its robust economy and aging population, there is massive demand for skilled engineers, IT professionals, and tech workers.</p><p><strong>Job Market (avg. first-year salary):</strong></p><ul><li>Software Engineering: €45,000 - €65,000</li><li>Mechanical Engineering: €50,000 - €70,000</li><li>Consulting: €50,000 - €75,000</li><li>Finance: €40,000 - €60,000</li></ul>",
                 cities: [ { name: "Berlin", desc: "Capital, vibrant startup scene, affordable, creative culture, tech innovation hub", img: "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=400&q=80" }, { name: "Munich", desc: "Tech capital, strong industries (BMW, Siemens), beautiful Bavarian surroundings, higher cost of living", img: "https://images.unsplash.com/photo-1491092264392-a6f7b88ee3ef?auto=format&fit=crop&w=400&q=80" }, { name: "Aachen", desc: "RWTH University hub, strong engineering focus, close to Belgium/Netherlands", img: "https://images.unsplash.com/photo-1516787093114-b2c9b6d0fcda?auto=format&fit=crop&w=400&q=80" }, { name: "Heidelberg", desc: "Historic university town, picturesque old town, strong international community", img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400&q=80" }, { name: "Frankfurt", desc: "Financial hub, strong business and consulting opportunities, well-connected", img: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=400&q=80" }, { name: "Hamburg", desc: "Port city, media and logistics hub, vibrant culture, excellent quality of life", img: "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=400&q=80" } ],
                 research: "<p>Germany leads in engineering research with world-class facilities.</p><p><strong>Research Opportunities:</strong></p><ul><li><strong>PhD Funding:</strong> €17K-€25K/year stipend + free tuition</li><li><strong>DFG Grants:</strong> German Research Foundation offers substantial funding</li><li><strong>Max Planck Institutes:</strong> World-leading research centers</li><li><strong>Fraunhofer Society:</strong> Applied research with industry collaboration</li><li><strong>Strong STEM focus:</strong> Engineering, Materials Science, Renewable Energy</li></ul>",
-                successStories: [ { initials: "RC", name: "Ravi Chakraborty", detail: "Senior Engineer at Siemens, TU Munich", story: "MS Mechanical Engineering from TU Munich, interned at Siemens plant, converted to permanent role. Now earning €70K+ with relocation packages to international offices." }, { initials: "AS", name: "Amit Singh", detail: "Startup Founder, Berlin", story: "Berlin tech startup founder who started as a student, built AI product with €2M funding. Now employs 50+ people across Europe." }, { initials: "SV", name: "Sneha Verma", detail: "Renewable Energy Lead at Enercon", story: "MS Renewable Energy from RWTH Aachen, joined Enercon wind turbine company, now leading R&D for offshore wind projects." }, { initials: "DM", name: "Deepak Mehta", detail: "Automotive Engineer at Audi", story: "TU Munich graduate interned at Audi, got hired post-graduation in EV development team. Now leading battery technology initiatives." } ],
-                visa: "<strong>Visa Type:</strong> German National Visa for Study (Nationales Visum)<br><strong>Processing Time:</strong> 2-4 weeks<br><strong>Key Requirements:</strong><ul><li>✓ Admission letter from German university</li><li>✓ Blocked Account (Sperrkonno) with €11,208/year</li><li>✓ Proof of health insurance</li><li>✓ Valid passport</li><li>✓ No IELTS required (many programs in German)</li></ul><strong>Post-Study Work:</strong> 18-month Job Seeker Visa (18 Monate Jobsuche)",
-                faqs: [ { q: "Are German universities really free?", a: "Most public universities in Germany are tuition-free for international students at the Bachelor's and Master's level. You only pay semester fees (€100-€300) which include student union and public transport passes." }, { q: "Do I need to know German?", a: "For many English-taught Master's programs, no. But learning German is highly recommended for better integration and career prospects." }, { q: "What's the cost of living?", a: "€800-€1,200/month typically. This is one of the lowest in Western Europe. Germany offers excellent value for money." }, { q: "Post-study work options?", a: "18-month job seeker visa, then regular visa sponsorship if hired. Tech and engineering fields have very high hiring rates." }, { q: "Is it hard to get a job after graduation?", a: "No. German companies actively hire international graduates, especially in engineering and tech. Placement rates are 90%+." } ]
+                // successStories: [ { initials: "RC", name: "Ravi Chakraborty", detail: "Senior Engineer at Siemens, TU Munich", story: "MS Mechanical Engineering from TU Munich, interned at Siemens plant, converted to permanent role. Now earning €70K+ with relocation packages to international offices." }, { initials: "AS", name: "Amit Singh", detail: "Startup Founder, Berlin", story: "Berlin tech startup founder who started as a student, built AI product with €2M funding. Now employs 50+ people across Europe." }, { initials: "SV", name: "Sneha Verma", detail: "Renewable Energy Lead at Enercon", story: "MS Renewable Energy from RWTH Aachen, joined Enercon wind turbine company, now leading R&D for offshore wind projects." }, { initials: "DM", name: "Deepak Mehta", detail: "Automotive Engineer at Audi", story: "TU Munich graduate interned at Audi, got hired post-graduation in EV development team. Now leading battery technology initiatives." } ],
+                // visa: "<strong>Visa Type:</strong> German National Visa for Study (Nationales Visum)<br><strong>Processing Time:</strong> 2-4 weeks<br><strong>Key Requirements:</strong><ul><li>✓ Admission letter from German university</li><li>✓ Blocked Account (Sperrkonno) with €11,208/year</li><li>✓ Proof of health insurance</li><li>✓ Valid passport</li><li>✓ No IELTS required (many programs in German)</li></ul><strong>Post-Study Work:</strong> 18-month Job Seeker Visa (18 Monate Jobsuche)",
+                // faqs: [ { q: "Are German universities really free?", a: "Most public universities in Germany are tuition-free for international students at the Bachelor's and Master's level. You only pay semester fees (€100-€300) which include student union and public transport passes." }, { q: "Do I need to know German?", a: "For many English-taught Master's programs, no. But learning German is highly recommended for better integration and career prospects." }, { q: "What's the cost of living?", a: "€800-€1,200/month typically. This is one of the lowest in Western Europe. Germany offers excellent value for money." }, { q: "Post-study work options?", a: "18-month job seeker visa, then regular visa sponsorship if hired. Tech and engineering fields have very high hiring rates." }, { q: "Is it hard to get a job after graduation?", a: "No. German companies actively hire international graduates, especially in engineering and tech. Placement rates are 90%+." } ]
             },
             ireland: {
                 name: "Ireland",
@@ -1698,9 +1812,9 @@
                 career: "<p>Ireland offers the <strong>2-year Critical Skills Employment Permit visa</strong> post-graduation, allowing work in tech-focused roles. Many FAANG companies directly hire Irish graduates.</p><p><strong>Job Market (avg. first-year salary):</strong></p><ul><li>Software Engineering: €55,000 - €85,000</li><li>Data Science: €50,000 - €80,000</li><li>Cybersecurity: €50,000 - €75,000</li><li>Cloud Architecture: €60,000 - €90,000</li><li>Management Consulting: €50,000 - €70,000</li></ul>",
                 cities: [ { name: "Dublin", desc: "Capital, tech hub with Google, Apple, Meta offices. Vibrant nightlife, historic sites, excellent for career networking", img: "https://images.unsplash.com/photo-1590089415225-401ed6f9b8ce?auto=format&fit=crop&w=400&q=80" }, { name: "Cork", desc: "Second largest city, pharma and tech companies, more affordable than Dublin, friendly community", img: "https://images.unsplash.com/photo-1516787093114-b2c9b6d0fcda?auto=format&fit=crop&w=400&q=80" }, { name: "Galway", desc: "Bohemian, artistic city on west coast, strong IT companies, excellent quality of life", img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400&q=80" }, { name: "Limerick", desc: "Affordable, growing tech scene, strong university, friendly locals", img: "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=400&q=80" }, { name: "Belfast", desc: "Tech emerging hub, lower costs, strong aerospace/engineering heritage", img: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=400&q=80" }, { name: "Waterford", desc: "Emerging tech city, affordable, good beach access, growing startups", img: "https://images.unsplash.com/photo-1551632786-de41ec16a83f?auto=format&fit=crop&w=400&q=80" } ],
                 research: "<p>Ireland is investing heavily in R&D with EU funding.</p><p><strong>Research Opportunities:</strong></p><ul><li><strong>PhD Funding:</strong> €12K-€18K/year stipend + tuition covered</li><li>  <strong>IRC Grants:</strong> Irish Research Council funds research in STEM</li><li><strong>Industry-Academia Collaboration:</strong> Tech companies sponsor research</li><li><strong>EU Horizon Europe Funding:</strong> Access to billions in research grants</li><li><strong>Innovation Centers:</strong> Many universities have startup incubators</li></ul>",
-                successStories: [ { initials: "MJ", name: "Madhuri Joshi", detail: "Senior Software Engineer at Google Dublin", story: "Trinity College MS Computer Science, interned at Google summer before graduation, converted to full-time. Now managing 10+ engineers, earning €95K+." }, { initials: "AK", name: "Akshay Krishnan", detail: "Product Manager at Meta, UCD", story: "UCD MBA, worked in startup before Meta, got into Meta's Product Management program post-MBA. Now managing 50M+ users product." }, { initials: "PR", name: "Priya Raman", detail: "Cybersecurity Lead at Microsoft Ireland", story: "Cork MS Cybersecurity, hired by Microsoft for graduate scheme, now leading security for enterprise products." }, { initials: "RP", name: "Rajan Patel", detail: "CTO of Fintech Startup, Trinity", story: "Trinity MS Data Science grad, launched fintech startup with €5M Series A funding, now 60+ team members." } ],
-                visa: "<strong>Visa Type:</strong> Student Visa / Stamp 2 Visa<br><strong>Processing Time:</strong> 2-3 weeks<br><strong>Key Requirements:</strong><ul><li>✓ Letter of acceptance from Irish institution</li><li>✓ Proof of funds (€10,000 initial + proof of fees and maintenance)</li><li>✓ Valid passport</li><li>✓ Private medical insurance (compulsory from day 1)</li><li>✓ Evidence of English proficiency if required</li></ul><strong>Post-Study Work:</strong> 2-year Critical Skills Employment Permit Visa",
-                faqs: [ { q: "Why Ireland for tech?", a: "Google, Apple, Meta, Amazon, Microsoft have major offices here. Easy to get hired, strong tech culture, and fantastic post-study visa." }, { q: "Cost of living in Dublin?", a: "€12,000-€18,000/year for students (includes rent, food, transport). More expensive than rest of Europe but well worth it for opportunities." }, { q: "Difference between Ireland and UK?", a: "Ireland: 2-year post-study visa (vs UK's 2 years but different rules), Schengen access, lower costs outside Dublin, strong tech dominance." }, { q: "How easy to get hired post-graduation?", a: "Very easy. Tech companies actively recruit from Irish universities. Most graduates in tech have offers before graduation." }, { q: "Can I stay in Ireland after my studies?", a: "Yes. The 2-year Critical Skills visa is easy to get if you have a job offer. Many graduates transition to permanent residency later." } ]
+                // successStories: [ { initials: "MJ", name: "Madhuri Joshi", detail: "Senior Software Engineer at Google Dublin", story: "Trinity College MS Computer Science, interned at Google summer before graduation, converted to full-time. Now managing 10+ engineers, earning €95K+." }, { initials: "AK", name: "Akshay Krishnan", detail: "Product Manager at Meta, UCD", story: "UCD MBA, worked in startup before Meta, got into Meta's Product Management program post-MBA. Now managing 50M+ users product." }, { initials: "PR", name: "Priya Raman", detail: "Cybersecurity Lead at Microsoft Ireland", story: "Cork MS Cybersecurity, hired by Microsoft for graduate scheme, now leading security for enterprise products." }, { initials: "RP", name: "Rajan Patel", detail: "CTO of Fintech Startup, Trinity", story: "Trinity MS Data Science grad, launched fintech startup with €5M Series A funding, now 60+ team members." } ],
+                // visa: "<strong>Visa Type:</strong> Student Visa / Stamp 2 Visa<br><strong>Processing Time:</strong> 2-3 weeks<br><strong>Key Requirements:</strong><ul><li>✓ Letter of acceptance from Irish institution</li><li>✓ Proof of funds (€10,000 initial + proof of fees and maintenance)</li><li>✓ Valid passport</li><li>✓ Private medical insurance (compulsory from day 1)</li><li>✓ Evidence of English proficiency if required</li></ul><strong>Post-Study Work:</strong> 2-year Critical Skills Employment Permit Visa",
+                // faqs: [ { q: "Why Ireland for tech?", a: "Google, Apple, Meta, Amazon, Microsoft have major offices here. Easy to get hired, strong tech culture, and fantastic post-study visa." }, { q: "Cost of living in Dublin?", a: "€12,000-€18,000/year for students (includes rent, food, transport). More expensive than rest of Europe but well worth it for opportunities." }, { q: "Difference between Ireland and UK?", a: "Ireland: 2-year post-study visa (vs UK's 2 years but different rules), Schengen access, lower costs outside Dublin, strong tech dominance." }, { q: "How easy to get hired post-graduation?", a: "Very easy. Tech companies actively recruit from Irish universities. Most graduates in tech have offers before graduation." }, { q: "Can I stay in Ireland after my studies?", a: "Yes. The 2-year Critical Skills visa is easy to get if you have a job offer. Many graduates transition to permanent residency later." } ]
             },
             netherlands: {
                 name: "Netherlands",
@@ -1715,9 +1829,9 @@
                 career: "<p>Graduates can apply for a 1-year <strong>'Orientation Year' visa (Zoekjaar Visum)</strong> to find employment. The Netherlands has a severe shortage of IT professionals, engineers, and supply chain experts, offering high salaries and a <strong>30% tax ruling advantage</strong> for highly skilled migrants (first 5 years tax-free on income above certain threshold).</p><p><strong>Job Market (avg. first-year salary):</strong></p><ul><li>Software Engineering: €50,000 - €75,000 (+30% tax ruling benefit)</li><li>Mechanical Engineering: €48,000 - €65,000</li><li>Data Science: €55,000 - €80,000</li><li>Supply Chain Manager: €50,000 - €70,000</li><li>Finance: €45,000 - €65,000</li></ul>",
                 cities: [ { name: "Amsterdam", desc: "Capital, vibrant culture, tech startups, canals, nightlife, more expensive", img: "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?auto=format&fit=crop&w=400&q=80" }, { name: "Delft", desc: "Tech city, TU Delft hub, close to The Hague, smaller town feel, affordable", img: "https://images.unsplash.com/photo-1506787094541-e48fea69f2ff?auto=format&fit=crop&w=400&q=80" }, { name: "Rotterdam", desc: "Port city, logistics hub, modern architecture, affordable, growing tech scene", img: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=400&q=80" }, { name: "Utrecht", desc: "Central location, young vibe, historic city center, very multicultural", img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400&q=80" }, { name: "Leiden", desc: "Historic university town, charming, peaceful, close to The Hague", img: "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=400&q=80" }, { name: "Groningen", desc: "Student city, affordable, young population, northern culture, very livable", img: "https://images.unsplash.com/photo-1512475454950-12db7faeabba?auto=format&fit=crop&w=400&q=80" } ],
                 research: "<p>Netherlands is a leader in applied research and innovation.</p><p><strong>Research Opportunities:</strong></p><ul><li><strong>PhD Funding:</strong> €16K-€24K/year + tuition covered</li><li><strong>NWO Grants:</strong> Netherlands Organization for Scientific Research funding</li><li><strong>Erasmus+ Scholarships:</strong> For European collaborations</li><li><strong>Industry-Academia Collaboration:</strong> Strong partnerships with Philips, Shell, Unilever</li><li><strong>Innovation Culture:</strong> Very entrepreneurial research environment</li></ul>",
-                successStories: [ { initials: "VK", name: "Vikram Kumar", detail: "Senior Engineer at Philips, TU Delft", story: "TU Delft MS IoT Engineering, Philips internship converted to full-time. Now earning €75K+ with 30% tax benefit. Got permanent residency after 5 years." }, { initials: "AS", name: "Anjali Singh", detail: "Data Scientist at Booking.com, Amsterdam", story: "MS Data Science from University of Amsterdam, hired by Booking.com (huge in Netherlands). Now earning €80K+ with great work-life balance." }, { initials: "PM", name: "Pratik Mehta", detail: "Supply Chain Manager at Port of Rotterdam", story: "Erasmus University graduate working in port operations. Currently managing logistics for 100+ containers daily. Salary €70K+." }, { initials: "RJ", name: "Rajesh Joshi", detail: "Startup Founder, Amsterdam", story: "Started FinTech startup while studying at University of Amsterdam. Raised €3M funding. Now 25 employees across Netherlands and Germany." } ],
-                visa: "<strong>Visa Type:</strong> MVV (Entry Visa) + VVR (Residence Permit)<br><strong>Processing Time:</strong> 2-3 weeks<br><strong>Key Requirements:</strong><ul><li>✓ University applies on student's behalf (simplified process)</li><li>✓ Proof of funds (~€1,200/month)</li><li>✓ Valid passport</li><li>✓ No health certificate required typically</li><li>✓ No IELTS required (English widespread)</li></ul><strong>Post-Study Work:</strong> 1-year Orientation Year (Zoekjaar) Visa",
-                faqs: [ { q: "Why Netherlands over Germany or UK?", a: "Better work-life balance, innovative culture, 30% tax ruling for skilled workers, easier visa process. Less bureaucratic than Germany, friendlier to non-English than France." }, { q: "Is English sufficient for daily life?", a: "Absolutely. Netherlands has the highest English proficiency in non-English speaking Europe. Most young Dutch people speak English fluently." }, { q: "What's the 30% tax ruling?", a: "Highly skilled immigrants get 30% of gross salary tax-free for first 5 years. Effectively saving thousands of euros." }, { q: "Is it easy to find jobs after graduation?", a: "Very easy. Netherlands actively recruits skilled foreigners. Tech companies like Booking.com, Shell, Philips actively hire international graduates." }, { q: "Cost of living?", a: "€1,000-€1,400/month for students. Affordable compared to UK/Nordic countries. With 30% tax benefit, disposable income is good." } ]
+                // successStories: [ { initials: "VK", name: "Vikram Kumar", detail: "Senior Engineer at Philips, TU Delft", story: "TU Delft MS IoT Engineering, Philips internship converted to full-time. Now earning €75K+ with 30% tax benefit. Got permanent residency after 5 years." }, { initials: "AS", name: "Anjali Singh", detail: "Data Scientist at Booking.com, Amsterdam", story: "MS Data Science from University of Amsterdam, hired by Booking.com (huge in Netherlands). Now earning €80K+ with great work-life balance." }, { initials: "PM", name: "Pratik Mehta", detail: "Supply Chain Manager at Port of Rotterdam", story: "Erasmus University graduate working in port operations. Currently managing logistics for 100+ containers daily. Salary €70K+." }, { initials: "RJ", name: "Rajesh Joshi", detail: "Startup Founder, Amsterdam", story: "Started FinTech startup while studying at University of Amsterdam. Raised €3M funding. Now 25 employees across Netherlands and Germany." } ],
+                // visa: "<strong>Visa Type:</strong> MVV (Entry Visa) + VVR (Residence Permit)<br><strong>Processing Time:</strong> 2-3 weeks<br><strong>Key Requirements:</strong><ul><li>✓ University applies on student's behalf (simplified process)</li><li>✓ Proof of funds (~€1,200/month)</li><li>✓ Valid passport</li><li>✓ No health certificate required typically</li><li>✓ No IELTS required (English widespread)</li></ul><strong>Post-Study Work:</strong> 1-year Orientation Year (Zoekjaar) Visa",
+                // faqs: [ { q: "Why Netherlands over Germany or UK?", a: "Better work-life balance, innovative culture, 30% tax ruling for skilled workers, easier visa process. Less bureaucratic than Germany, friendlier to non-English than France." }, { q: "Is English sufficient for daily life?", a: "Absolutely. Netherlands has the highest English proficiency in non-English speaking Europe. Most young Dutch people speak English fluently." }, { q: "What's the 30% tax ruling?", a: "Highly skilled immigrants get 30% of gross salary tax-free for first 5 years. Effectively saving thousands of euros." }, { q: "Is it easy to find jobs after graduation?", a: "Very easy. Netherlands actively recruits skilled foreigners. Tech companies like Booking.com, Shell, Philips actively hire international graduates." }, { q: "Cost of living?", a: "€1,000-€1,400/month for students. Affordable compared to UK/Nordic countries. With 30% tax benefit, disposable income is good." } ]
             },
             europe: {
                 name: "Europe (Schengen)",
@@ -1732,9 +1846,9 @@
                 career: "<p>Post-study work rights vary significantly by country:</p><ul><li><strong>France:</strong> 2-year post-study visa for Indian graduates</li><li><strong>Germany:</strong> 18-month job seeker visa</li><li><strong>Spain:</strong> 1-year search visa for recent graduates</li><li><strong>Italy:</strong> 1-year job seeker visa</li><li><strong>Sweden:</strong> 6-9 months job seeker visa</li><li><strong>All countries:</strong> EU Blue Card eligibility for high-skilled workers</li></ul>",
                 cities: [ { name: "Paris, France", desc: "Romance, culture, fashion, finance. ESSEC, HEC Paris hub. Expensive but worth it.", img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=400&q=80" }, { name: "Milan, Italy", desc: "Fashion capital, design hub. Expensive but Politecnico di Milano draws talent from world.", img: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=400&q=80" }, { name: "Barcelona, Spain", desc: "Vibrant culture, beaches, affordable, tech startups growing, excellent food scene", img: "https://images.unsplash.com/photo-1562883676-8c6fbf060b88?auto=format&fit=crop&w=400&q=80" }, { name: "Stockholm, Sweden", desc: "Modern, tech hub, sustainability leader, expensive but high salaries compensate", img: "https://images.unsplash.com/photo-1508150172973-7ce538e39345?auto=format&fit=crop&w=400&q=80" }, { name: "Copenhagen, Denmark", desc: "Design, hygge culture, bike friendly, startup ecosystem, expensive", img: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=400&q=80" }, { name: "Zurich, Switzerland", desc: "Most expensive but highest salaries, ETH Zurich world-leading engineering, pristine nature", img: "https://images.unsplash.com/photo-1549144611-6a6b3b3ef728?auto=format&fit=crop&w=400&q=80" } ],
                 research: "<p>Europe is a research powerhouse with EU Horizon Europe funding (€95+ billion) for research.</p><p><strong>Research Opportunities:</strong></p><ul><li><strong>PhD Funding:</strong> Varies by country. Nordic countries: €18K+/year, Southern/Western: €12K-16K/year</li><li><strong>Erasmus Mundus Scholarships:</strong> For European Master's programs</li><li><strong>Horizon Europe Grants:</strong> Massive EU research funding</li><li><strong>International Collaborations:</strong> Easy to collaborate across borders</li><li><strong>Research Visa Extensions:</strong> Extended visas for postdocs</li></ul>",
-                successStories: [ { initials: "SG", name: "Sandhya Gupta", detail: "Designer at Dolce & Gabbana, Milan", story: "Politecnico di Milano fashion design grad, hired by Dolce & Gabbana. Now designing seasonal collections, earning €70K+." }, { initials: "AK", name: "Ashok Kumar", detail: "Senior Software Engineer at H-Farm, Venice Italy", story: "MS Computer Science from University of Bologna, joined H-Farm startup, now leads 15 engineers. Great quality of life, good salary." }, { initials: "NS", name: "Neha Singh", detail: "Strategy Consultant at L.E.K. Consulting, Paris", story: "ESSEC graduate, joined L.E.K. Paris office. Now senior manager consulting for luxury brands." }, { initials: "DG", name: "Deepak Gupta", detail: "Renewable Energy Engineer at Ørsted, Copenhagen", story: "MS Renewable Energy from DTU Copenhagen, joined Ørsted (Danish wind company). Now leading offshore wind projects. Great work-life balance." } ],
-                visa: "<strong>Visa Type:</strong> National Long-Stay Visa (Type D) - each country specific<br><strong>Processing Time:</strong> 2-4 weeks<br><strong>Key Requirements (vary by country):</strong><ul><li>✓ Admission letter from European university</li><li>✓ Proof of funds (€600-€1,500/month depending on country)</li><li>✓ Accommodation proof</li><li>✓ Health insurance</li><li>✓ Valid passport</li></ul><strong>Post-Study Work:</strong> Varies by country (1-2 years typically)",
-                faqs: [ { q: "Which European country to choose?", a: "Germany for affordability & engineering, France for business, Italy for design, Nordic countries for quality of life, Spain for affordable lifestyle." }, { q: "Can I travel within Europe on my student visa?", a: "Yes! Schengen visa allows travel across 27 countries. Weekend trips are common and affordable." }, { q: "Easiest European country for post-study work?", a: "Germany (18 months), France (2 years), Netherlands (1 year). All relatively straightforward for international graduates." }, { q: "Cost of studying in Europe?", a: "Huge variation. Germany/France public universities: €2K-8K/year. Nordic/Switzerland: €12K-25K/year. Private schools: €15K-40K/year." }, { q: "Language barrier?", a: "Many programs in English. But learning local language helps. Netherlands/Nordic countries very English-friendly." } ]
+                // successStories: [ { initials: "SG", name: "Sandhya Gupta", detail: "Designer at Dolce & Gabbana, Milan", story: "Politecnico di Milano fashion design grad, hired by Dolce & Gabbana. Now designing seasonal collections, earning €70K+." }, { initials: "AK", name: "Ashok Kumar", detail: "Senior Software Engineer at H-Farm, Venice Italy", story: "MS Computer Science from University of Bologna, joined H-Farm startup, now leads 15 engineers. Great quality of life, good salary." }, { initials: "NS", name: "Neha Singh", detail: "Strategy Consultant at L.E.K. Consulting, Paris", story: "ESSEC graduate, joined L.E.K. Paris office. Now senior manager consulting for luxury brands." }, { initials: "DG", name: "Deepak Gupta", detail: "Renewable Energy Engineer at Ørsted, Copenhagen", story: "MS Renewable Energy from DTU Copenhagen, joined Ørsted (Danish wind company). Now leading offshore wind projects. Great work-life balance." } ],
+                // visa: "<strong>Visa Type:</strong> National Long-Stay Visa (Type D) - each country specific<br><strong>Processing Time:</strong> 2-4 weeks<br><strong>Key Requirements (vary by country):</strong><ul><li>✓ Admission letter from European university</li><li>✓ Proof of funds (€600-€1,500/month depending on country)</li><li>✓ Accommodation proof</li><li>✓ Health insurance</li><li>✓ Valid passport</li></ul><strong>Post-Study Work:</strong> Varies by country (1-2 years typically)",
+                // faqs: [ { q: "Which European country to choose?", a: "Germany for affordability & engineering, France for business, Italy for design, Nordic countries for quality of life, Spain for affordable lifestyle." }, { q: "Can I travel within Europe on my student visa?", a: "Yes! Schengen visa allows travel across 27 countries. Weekend trips are common and affordable." }, { q: "Easiest European country for post-study work?", a: "Germany (18 months), France (2 years), Netherlands (1 year). All relatively straightforward for international graduates." }, { q: "Cost of studying in Europe?", a: "Huge variation. Germany/France public universities: €2K-8K/year. Nordic/Switzerland: €12K-25K/year. Private schools: €15K-40K/year." }, { q: "Language barrier?", a: "Many programs in English. But learning local language helps. Netherlands/Nordic countries very English-friendly." } ]
             },
             australia: {
                 name: "Australia",
@@ -1749,9 +1863,9 @@
                 career: "<p>Australia offers <strong>Post-Study Work Visa (PSWV): 2-5 years depending on qualification and study area</strong>. The point-based skilled migration system makes Australia the EASIEST country for PR.</p><p><strong>Job Market (avg. first-year salary):</strong></p><ul><li>Software Engineering: AUD 80,000 - 110,000</li><li>Mechanical Engineering: AUD 75,000 - 95,000</li><li>Nursing: AUD 70,000 - 85,000</li><li>Accounting: AUD 65,000 - 80,000</li><li>Data Science: AUD 85,000 - 120,000</li></ul>",
                 cities: [ { name: "Sydney", desc: "Largest city, beaches, vibrant culture, expensive but world-class amenities. Opera House iconic symbol.", img: "https://images.unsplash.com/photo-1506973404872-a4a16f1e38f7?auto=format&fit=crop&w=400&q=80" }, { name: "Melbourne", desc: "Cultural capital, world-class food scene, strong arts, four universities, more affordable than Sydney", img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400&q=80" }, { name: "Brisbane", desc: "Sunny subtropical city, strong growth, affordable, beautiful riverside", img: "https://images.unsplash.com/photo-1495493263169-0ac59a6b7e11?auto=format&fit=crop&w=400&q=80" }, { name: "Perth", desc: "Isolated but beautiful, mining economy, strong engineering jobs, high salaries", img: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=400&q=80" }, { name: "Adelaide", desc: "Most affordable major city, growing tech sector, beach access, friendly community", img: "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=400&q=80" }, { name: "Canberra", desc: "Capital, tech and government jobs, planned city, peaceful, affordable", img: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&w=400&q=80" } ],
                 research: "<p>Australia is a research powerhouse with major investment from government and industry.</p><p><strong>Research Opportunities:</strong></p><ul><li><strong>PhD Funding:</strong> AUD 18K-26K/year + tuition covered</li><li><strong>Collaborative Research Grants:</strong> Government-industry partnerships</li><li><strong>Indian STEM Scholarships:</strong> Special programs for Indian researchers</li><li><strong>Post-Research Work:</strong> Extended visas for researchers</li><li><strong>Strong STEM Focus:</strong> Engineering, Medical Research, Environmental Science</li></ul>",
-                successStories: [ { initials: "SG", name: "Sameer Garg", detail: "Senior Software Architect at Google Australia", story: "UNSW MS Computer Science, Google internship converted to full-time. Now earning AUD 150K+. Got PR within 3 years of graduation." }, { initials: "NA", name: "Neha Arora", detail: "Senior Nurse Manager at Royal Melbourne Hospital", story: "Nursing degree from Melbourne, worked in NHS briefly, now senior manager. Earned PR within 2 years due to nursing shortage." }, { initials: "AJ", name: "Anuj Joshi", detail: "Consulting Director at McKinsey Australia", story: "MBA from UNSW, graduated during pandemic, joined McKinsey graduate scheme, now partner track, earning AUD 200K+." }, { initials: "DT", name: "Divya Tripathi", detail: "Mining Engineer at Rio Tinto, Queensland", story: "UQ Mining Engineering grad, hired by Rio Tinto for Western Australia operations. High salary + fly-in-fly-out arrangement." } ],
-                visa: "<strong>Visa Type:</strong> Student Visa (Subclass 500)<br><strong>Processing Time:</strong> 2-4 weeks<br><strong>Key Requirements:</strong><ul><li>✓ Confirmation of Enrolment (CoE)</li><li>✓ Genuine Temporary Entrant (GTE) statement</li><li>✓ Overseas Student Health Cover (OSHC)</li><li>✓ Proof of financial capacity (AUD 60K+)</li><li>✓ Valid passport</li></ul><strong>Post-Study Work:</strong> 2-5 years (PSWV) depending on qualification, then PR possible",
-                faqs: [ { q: "Is Australia expensive?", a: "Yes, higher than most countries. But salaries are also 20-30% higher, and post-study work rights are exceptional." }, { q: "Easiest path to PR from Australia?", a: "Very easy. Australia has a point-based skilled migration system specifically designed for international students. Most engineering/nursing/accounting grads get PR within 3-5 years." }, { q: "Post-study work visa duration?", a: "Bachelor's: 2-4 years depending on where studied. Master's: typically 2-3 years. Some areas like nursing and engineering get 4-5 years." }, { q: "Cost of living breakdown?", a: "Rent: AUD 200-400/week, Food: AUD 80-120/week, Transport: AUD 50/week. Total ~AUD 1,300-1,600/month for students." }, { q: "Is it easy to find accommodation?", a: "Yes. Most universities offer on-campus housing. Student share houses are common. Plenty of options available for international students." } ]
+                // successStories: [ { initials: "SG", name: "Sameer Garg", detail: "Senior Software Architect at Google Australia", story: "UNSW MS Computer Science, Google internship converted to full-time. Now earning AUD 150K+. Got PR within 3 years of graduation." }, { initials: "NA", name: "Neha Arora", detail: "Senior Nurse Manager at Royal Melbourne Hospital", story: "Nursing degree from Melbourne, worked in NHS briefly, now senior manager. Earned PR within 2 years due to nursing shortage." }, { initials: "AJ", name: "Anuj Joshi", detail: "Consulting Director at McKinsey Australia", story: "MBA from UNSW, graduated during pandemic, joined McKinsey graduate scheme, now partner track, earning AUD 200K+." }, { initials: "DT", name: "Divya Tripathi", detail: "Mining Engineer at Rio Tinto, Queensland", story: "UQ Mining Engineering grad, hired by Rio Tinto for Western Australia operations. High salary + fly-in-fly-out arrangement." } ],
+                // visa: "<strong>Visa Type:</strong> Student Visa (Subclass 500)<br><strong>Processing Time:</strong> 2-4 weeks<br><strong>Key Requirements:</strong><ul><li>✓ Confirmation of Enrolment (CoE)</li><li>✓ Genuine Temporary Entrant (GTE) statement</li><li>✓ Overseas Student Health Cover (OSHC)</li><li>✓ Proof of financial capacity (AUD 60K+)</li><li>✓ Valid passport</li></ul><strong>Post-Study Work:</strong> 2-5 years (PSWV) depending on qualification, then PR possible",
+                // faqs: [ { q: "Is Australia expensive?", a: "Yes, higher than most countries. But salaries are also 20-30% higher, and post-study work rights are exceptional." }, { q: "Easiest path to PR from Australia?", a: "Very easy. Australia has a point-based skilled migration system specifically designed for international students. Most engineering/nursing/accounting grads get PR within 3-5 years." }, { q: "Post-study work visa duration?", a: "Bachelor's: 2-4 years depending on where studied. Master's: typically 2-3 years. Some areas like nursing and engineering get 4-5 years." }, { q: "Cost of living breakdown?", a: "Rent: AUD 200-400/week, Food: AUD 80-120/week, Transport: AUD 50/week. Total ~AUD 1,300-1,600/month for students." }, { q: "Is it easy to find accommodation?", a: "Yes. Most universities offer on-campus housing. Student share houses are common. Plenty of options available for international students." } ]
             },
             canada: {
                 name: "Canada",
@@ -1766,9 +1880,9 @@
                 career: "<p>The <strong>Post-Graduation Work Permit (PGWP) allows 1-3 years of work</strong> depending on program length. This work experience directly counts toward Canadian Experience Class for PR applications. Canada is ACTIVELY recruiting skilled workers through Express Entry.</p><p><strong>Job Market (avg. first-year salary):</strong></p><ul><li>Software Engineering: CAD 75,000 - 110,000</li><li>Nursing: CAD 60,000 - 75,000</li><li>Mechanical Engineering: CAD 65,000 - 85,000</li><li>Consulting: CAD 70,000 - 100,000</li><li>Finance: CAD 60,000 - 85,000</li></ul>",
                 cities: [ { name: "Toronto", desc: "Largest city, financial hub, diverse, tech companies, excellent job market", img: "https://images.unsplash.com/photo-1503803548695-659e8e8531e5?auto=format&fit=crop&w=400&q=80" }, { name: "Vancouver", desc: "Stunning city, mountains, ocean, tech hub, Microsoft/Amazon offices, high cost of living", img: "https://images.unsplash.com/photo-1518235506717-e1ed3306a326?auto=format&fit=crop&w=400&q=80" }, { name: "Montreal", desc: "Cultural hub, bilingual, more affordable than Toronto/Vancouver, strong tech sector", img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400&q=80" }, { name: "Calgary", desc: "Oil & gas industry hub, affordable, sunny, strong engineering sector", img: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&w=400&q=80" }, { name: "Ottawa", desc: "Capital, government tech, growing startup scene, pleasant, affordable", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" }, { name: "Waterloo Region", desc: "Tech hub, startup ecosystem, strong tech companies, excellent for CS graduates", img: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=400&q=80" } ],
                 research: "<p>Canada offers excellent research opportunities with government and industry funding.</p><p><strong>Research Opportunities:</strong></p><ul><li><strong>PhD Funding:</strong> CAD 18K-25K/year + tuition covered</li><li><strong>NSERC Grants:</strong> Natural Sciences and Engineering Research Council funding</li><li><strong>SSHRC Funding:</strong> Social Sciences research support</li><li><strong>Industry Collaborations:</strong> Strong partnerships with tech companies</li><li><strong>Post-Doctoral Opportunities:</strong> High numbers of postdoc positions available</li></ul>",
-                successStories: [ { initials: "YS", name: "Yash Sharma", detail: "Software Developer at Microsoft Canada", story: "Waterloo MS Computer Science, Microsoft internship converted to offer. Now permanent resident (PR approved in 2 years via Express Entry)." }, { initials: "PI", name: "Priya Iyer", detail: "RN at Toronto General Hospital", story: "Nursing degree from Toronto, worked full-time post-graduation, got PR through healthcare worker pathway. Now earning CAD 85K+." }, { initials: "RP", name: "Rohan Patel", detail: "MBA Graduate, now Senior Consultant", story: "UBC MBA graduate, worked at consulting firm through co-op, converted to full-time, now senior manager." }, { initials: "SN", name: "Sanjay Nair", detail: "Startup Founder, Toronto", story: "Waterloo grad launched SaaS startup with CAD 2M funding. Now 30+ employees. Canadian startup ecosystem very supportive." } ],
-                visa: "<strong>Visa Type:</strong> Study Permit<br><strong>Processing Time:</strong> 2-4 weeks<br><strong>Key Requirements:</strong><ul><li>✓ Letter of Acceptance (LOA) from a Designated Learning Institution (DLI)</li><li>✓ Guaranteed Investment Certificate (GIC) with CAD 20,635</li><li>✓ Proof of ties to home country</li><li>✓ Valid passport (6 months validity)</li><li>✓ Clean police/medical clearance</li></ul><strong>Post-Study Work:</strong> PGWP (1-3 years, then pathway to PR)",
-                faqs: [ { q: "How easy is it to get PR after studies?", a: "Very easy. Canadian government encourages it. With work experience from PGWP, most graduates qualify for Express Entry. PR rates are 70%+ for international students." }, { q: "What's the difference between PGWP and other visas?", a: "PGWP lets you work legally for 1-3 years post-graduation. This work experience directly counts toward Express Entry points for PR." }, { q: "Can I work while studying?", a: "Yes, on-campus work is unlimited. Off-campus work is limited to 20 hours/week during studies, unlimited during breaks." }, { q: "Cost of studying in Canada?", a: "Tuition: CAD 15K-40K/year. Living: CAD 12K-18K/year. Total: CAD 27K-58K/year - cheaper than USA/Australia." }, { q: "Best province for international students?", a: "Ontario (Toronto, Waterloo) for tech jobs. BC (Vancouver) for outdoor lifestyle. Quebec (Montreal) for affordable living. All have good opportunities." } ]
+                // successStories: [ { initials: "YS", name: "Yash Sharma", detail: "Software Developer at Microsoft Canada", story: "Waterloo MS Computer Science, Microsoft internship converted to offer. Now permanent resident (PR approved in 2 years via Express Entry)." }, { initials: "PI", name: "Priya Iyer", detail: "RN at Toronto General Hospital", story: "Nursing degree from Toronto, worked full-time post-graduation, got PR through healthcare worker pathway. Now earning CAD 85K+." }, { initials: "RP", name: "Rohan Patel", detail: "MBA Graduate, now Senior Consultant", story: "UBC MBA graduate, worked at consulting firm through co-op, converted to full-time, now senior manager." }, { initials: "SN", name: "Sanjay Nair", detail: "Startup Founder, Toronto", story: "Waterloo grad launched SaaS startup with CAD 2M funding. Now 30+ employees. Canadian startup ecosystem very supportive." } ],
+                // visa: "<strong>Visa Type:</strong> Study Permit<br><strong>Processing Time:</strong> 2-4 weeks<br><strong>Key Requirements:</strong><ul><li>✓ Letter of Acceptance (LOA) from a Designated Learning Institution (DLI)</li><li>✓ Guaranteed Investment Certificate (GIC) with CAD 20,635</li><li>✓ Proof of ties to home country</li><li>✓ Valid passport (6 months validity)</li><li>✓ Clean police/medical clearance</li></ul><strong>Post-Study Work:</strong> PGWP (1-3 years, then pathway to PR)",
+                // faqs: [ { q: "How easy is it to get PR after studies?", a: "Very easy. Canadian government encourages it. With work experience from PGWP, most graduates qualify for Express Entry. PR rates are 70%+ for international students." }, { q: "What's the difference between PGWP and other visas?", a: "PGWP lets you work legally for 1-3 years post-graduation. This work experience directly counts toward Express Entry points for PR." }, { q: "Can I work while studying?", a: "Yes, on-campus work is unlimited. Off-campus work is limited to 20 hours/week during studies, unlimited during breaks." }, { q: "Cost of studying in Canada?", a: "Tuition: CAD 15K-40K/year. Living: CAD 12K-18K/year. Total: CAD 27K-58K/year - cheaper than USA/Australia." }, { q: "Best province for international students?", a: "Ontario (Toronto, Waterloo) for tech jobs. BC (Vancouver) for outdoor lifestyle. Quebec (Montreal) for affordable living. All have good opportunities." } ]
             }
         };
 
