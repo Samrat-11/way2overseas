@@ -400,6 +400,16 @@
         .nav-content { display: flex; justify-content: space-between; align-items: center; position: relative; padding: 0; }
         
         .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem; letter-spacing: -0.05em; color: var(--text-primary); }
+        .logo img { display: block; border-radius: 0.6rem; transition: background-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease, width 0.3s ease, height 0.3s ease; }
+        [data-theme="dark"] .logo img {
+            background: rgba(255, 255, 255, 0.96);
+            width: 64px !important;
+            height: 64px !important;
+            padding: 0.55rem;
+            border-radius: 50%;
+            object-fit: contain;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+        }
         .logo-icon { color: var(--brand-red); }
 
         .nav-links { display: flex; gap: 1.5rem; align-items: center; }
@@ -562,10 +572,10 @@
         .faq-item.active .faq-answer { max-height: 300px; }
 
         /* --- Premium Content Sections (Alternating Layout) --- */
-        .premium-content-section { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 6rem; padding: 3rem 0; }
+        .premium-content-section { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 4.5rem; padding: 2rem 0; }
         .premium-content-section.reverse { grid-template-columns: 1fr 1fr; direction: rtl; }
         .premium-content-section.reverse > * { direction: ltr; }
-        .premium-content-image { position: relative; height: 500px; border-radius: 1.5rem; overflow: hidden; box-shadow: var(--shadow-float); }
+        .premium-content-image { position: relative; height: 460px; border-radius: 1.5rem; overflow: hidden; box-shadow: var(--shadow-float); background: var(--surface-color); }
         .premium-content-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
         .premium-content-section:hover .premium-content-image img { transform: scale(1.05); }
         .premium-content-text h2 { font-size: 2rem; color: var(--brand-red); margin-bottom: 1.5rem; }
@@ -579,6 +589,20 @@
         .stat-highlight-card { background: linear-gradient(135deg, rgba(225, 29, 72, 0.1) 0%, rgba(147, 51, 234, 0.05) 100%); border: 1px solid var(--border-color); border-radius: 1rem; padding: 1.5rem; text-align: center; }
         .stat-highlight-card h4 { font-size: 2rem; color: var(--brand-red); font-weight: 800; margin-bottom: 0.5rem; }
         .stat-highlight-card p { color: var(--text-secondary); font-size: 0.9rem; }
+        .country-insight-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+        .insight-card { background: var(--bg-color); border: 1px solid var(--border-color); border-radius: 1rem; padding: 1.2rem; }
+        .insight-card span { display: block; color: var(--text-secondary); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.45rem; }
+        .insight-card strong { color: var(--text-primary); font-size: 1rem; line-height: 1.4; }
+        .country-full-section { margin-bottom: 4.5rem; padding: 2rem 0; }
+        .country-full-section h2 { font-size: 2rem; color: var(--brand-red); margin-bottom: 1rem; }
+        .country-full-section > p { color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 2rem; }
+        .country-info-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+        .info-panel { background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 1.25rem; padding: 1.5rem; box-shadow: var(--shadow-sm); }
+        .info-panel h3 { color: var(--text-primary); font-size: 1.1rem; margin-bottom: 0.8rem; }
+        .info-panel p, .info-panel li { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.65; margin-bottom: 0.6rem; }
+        .info-panel ul { padding-left: 1.1rem; list-style: disc; }
+        .info-panel li::marker { color: var(--brand-red); }
+        .country-section-hidden { display: none !important; }
 
         /* City Cards Grid */
         .cities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem; }
@@ -785,6 +809,55 @@
             .ai-btn { grid-column: 1; }
             .country-hero h1 { font-size: 2.5rem; }
             .back-btn { top: 15px; left: 15px; font-size: 0.8rem; padding: 0.5rem 1rem;}
+            .premium-content-section,
+            .premium-content-section.reverse {
+                grid-template-columns: 1fr;
+                gap: 1.75rem;
+                direction: ltr;
+                margin-bottom: 3.5rem;
+                padding: 1.5rem 0;
+            }
+            .premium-content-image {
+                order: 1;
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16 / 10;
+                border-radius: 1.25rem;
+            }
+            .premium-content-text {
+                order: 2;
+                min-width: 0;
+            }
+            .premium-content-text h2 {
+                font-size: clamp(1.65rem, 8vw, 2rem);
+                line-height: 1.15;
+            }
+            .premium-content-text p,
+            .premium-content-text li {
+                font-size: 1rem;
+                overflow-wrap: break-word;
+            }
+            .stats-highlights {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin: 1.5rem 0 0;
+            }
+            .stat-highlight-card {
+                padding: 1.25rem;
+                border-radius: 1rem;
+            }
+            .country-insight-grid,
+            .country-info-grid {
+                grid-template-columns: 1fr;
+            }
+            .country-full-section {
+                margin-bottom: 3.5rem;
+                padding: 1.5rem 0;
+            }
+            .country-full-section h2 {
+                font-size: clamp(1.65rem, 8vw, 2rem);
+                line-height: 1.15;
+            }
         }
         
         @media (max-width: 480px) {
@@ -799,6 +872,11 @@
             .mobile-menu-btn {
                 width: 34px;
                 height: 34px;
+            }
+            [data-theme="dark"] .logo img {
+                width: 54px !important;
+                height: 54px !important;
+                padding: 0.45rem;
             }
             .footer-grid, .dest-grid { grid-template-columns: 1fr; }
             .hero h1 { font-size: 2.5rem; }
@@ -1439,6 +1517,7 @@
                             <p id="cp-stat-3-label">Indian Students</p>
                         </div>
                     </div>
+                    <div class="country-insight-grid" id="cp-insights"></div>
                 </div>
             </section>
 
@@ -1500,9 +1579,9 @@
             </section>
 
             <!-- Section 7: Popular Cities (Full Width) -->
-            <section style="margin-bottom: 6rem; padding: 3rem 0;">
-                <h2 style="font-size: 2rem; color: var(--brand-red); margin-bottom: 1rem;">Popular Student Cities</h2>
-                <p style="color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 2rem;">Discover the vibrant cities where thousands of international students thrive:</p>
+            <section class="country-full-section" id="cp-cities-section">
+                <h2>Popular Student Cities</h2>
+                <p>Discover the vibrant cities where thousands of international students thrive:</p>
                 <div class="cities-grid" id="cp-cities"></div>
             </section>
 
@@ -1518,23 +1597,31 @@
             </section>
 
             <!-- Section 9: Success Stories (Full Width) -->
-            <section style="margin-bottom: 6rem; padding: 3rem 0;">
-                <h2 style="font-size: 2rem; color: var(--brand-red); margin-bottom: 1rem;"></h2>
-                <p style="color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 2rem;"></p>
+            <section class="country-full-section country-section-hidden" id="cp-success-section">
+                <h2>Student Success Pathways</h2>
+                <p>Realistic examples of how students can convert overseas education into stronger careers.</p>
                 <div class="success-stories-grid" id="cp-success-stories"></div>
             </section>
 
-            <!-- Section 10: Visa & FAQ (Content Left | Stats Right) -->
-            <section class="premium-content-section reverse">
-                <div class="premium-content-text">
-                    <h2></h2>
-                    <div id="cp-visa" style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; margin-bottom: 2rem;"></div>
-                    <h3 style="color: var(--brand-red); margin-top: 2rem; margin-bottom: 1rem;"></h3>
-                    <div id="cp-faqs"></div>
+            <!-- Section 10: Fees, Scholarships & Visa -->
+            <section class="country-full-section" id="cp-planning-section">
+                <h2>Fees, Scholarships & Visa Planning</h2>
+                <p>Plan your budget, documents, work rights, and post-study pathway before applying.</p>
+                <div class="country-info-grid">
+                    <article class="info-panel">
+                        <h3>Tuition & Living Costs</h3>
+                        <div id="cp-costs"></div>
+                    </article>
+                    <article class="info-panel">
+                        <h3>Scholarships & Funding</h3>
+                        <div id="cp-scholarships"></div>
+                    </article>
+                    <article class="info-panel">
+                        <h3>Visa & Work Rights</h3>
+                        <div id="cp-visa"></div>
+                    </article>
                 </div>
-                <div class="premium-content-image">
-                    <!-- <img id="cp-img-8" src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80" alt="Visa Process"> -->
-                </div>
+                <div id="cp-faqs" class="country-info-grid" style="margin-top: 1.25rem;"></div>
             </section>
 
             <!-- Call to Action -->
@@ -1886,6 +1973,233 @@
             }
         };
 
+        const countryEnhancements = {
+            usa: {
+                images: {
+                    1: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=900&q=80",
+                    2: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=80",
+                    3: "https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=900&q=80",
+                    4: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
+                    5: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=900&q=80",
+                    6: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80",
+                    7: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=900&q=80"
+                },
+                insights: [
+                    { label: "Tuition", value: "USD 20,000-60,000 per year" },
+                    { label: "Living costs", value: "USD 12,000-24,000 per year" },
+                    { label: "Work while studying", value: "On-campus up to 20 hours/week in term" },
+                    { label: "Post-study route", value: "OPT up to 12 months; STEM can reach 36 months" }
+                ],
+                why: "<p>The United States is ideal for students who want academic flexibility, research depth, strong internship pipelines, and access to the world's largest technology, finance, healthcare, consulting, and innovation ecosystem.</p><p>Students can combine majors, take electives across departments, build research portfolios, and graduate with practical exposure through internships, assistantships, campus jobs, and industry projects.</p>",
+                education: "<p>US higher education is credit based and flexible. Undergraduate students usually complete general education, major requirements, electives, and capstone or research work. Graduate programs are typically research-led or professionally oriented, with assistantships available in many STEM and business schools.</p><ul><li><strong>Intakes:</strong> Fall is the main intake; Spring is available at many universities.</li><li><strong>Teaching style:</strong> Projects, seminars, labs, case studies, research papers, and continuous assessment.</li><li><strong>Best fit:</strong> Students targeting research, technology, entrepreneurship, data, business, healthcare, and high-growth careers.</li></ul>",
+                career: "<p>Career outcomes are strongest for students who build internships, projects, networking, and employer-ready portfolios during study. F-1 students may use CPT for eligible curricular internships and OPT after completing the program. STEM OPT can extend eligible post-study work to a total of 36 months.</p><ul><li>High-demand sectors: software, AI, cybersecurity, data science, engineering, finance, consulting, biotech, healthcare analytics.</li><li>Career advantage: large alumni networks, career fairs, co-op style internships, and strong employer engagement.</li></ul>",
+                costs: "<ul><li><strong>Tuition:</strong> Public universities often range from USD 20,000-40,000/year; private universities can be USD 35,000-60,000+/year.</li><li><strong>Living:</strong> USD 12,000-24,000/year depending on city and housing.</li><li><strong>Budget note:</strong> New York, Boston, San Francisco, and Los Angeles are premium-cost cities; Midwest and Southern states are usually more affordable.</li></ul>",
+                scholarships: "<ul><li>Merit scholarships from universities based on GPA, test scores, profile strength, essays, and leadership.</li><li>Graduate assistantships, teaching assistantships, and research assistantships can reduce tuition and provide stipends.</li><li>External options include Fulbright-Nehru, AAUW, and institution-specific fellowships.</li></ul>",
+                visa: "<ul><li><strong>Student visa:</strong> F-1 visa with Form I-20 from an SEVP-approved institution.</li><li><strong>Core documents:</strong> I-20, DS-160, SEVIS fee receipt, financial evidence, academic records, test scores, and visa interview preparation.</li><li><strong>Work:</strong> On-campus work is generally limited to 20 hours/week during sessions; CPT/OPT rules apply for off-campus training.</li><li><strong>Post-study:</strong> OPT is generally 12 months; eligible STEM graduates may apply for a 24-month extension.</li></ul>",
+                faqs: [
+                    { q: "Is the USA suitable for middle-class students?", a: "Yes, with careful university selection, assistantship targeting, scholarship applications, and lower-cost cities. Public universities can offer strong value." },
+                    { q: "Do I need GRE or GMAT?", a: "Many programs are test-optional, but strong scores can still improve scholarship and admit chances for competitive programs." },
+                    { q: "What matters most for admission?", a: "Academics, relevant projects, SOP, recommendations, test scores if required, internships, research, and clarity of goals." }
+                ]
+            },
+            uk: {
+                images: {
+                    2: "https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?auto=format&fit=crop&w=900&q=80",
+                    3: "https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=900&q=80",
+                    4: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
+                    5: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=900&q=80",
+                    6: "https://images.unsplash.com/photo-1521791055366-0d553872125f?auto=format&fit=crop&w=900&q=80",
+                    7: "https://images.unsplash.com/photo-1581093458791-9d09cc352d4f?auto=format&fit=crop&w=900&q=80"
+                },
+                insights: [
+                    { label: "Tuition", value: "GBP 12,000-35,000 per year" },
+                    { label: "Living costs", value: "GBP 12,000-18,000 per year" },
+                    { label: "Course length", value: "Most master's degrees finish in 1 year" },
+                    { label: "Post-study route", value: "Graduate visa 2 years until Dec 2026; 18 months from Jan 2027" }
+                ],
+                why: "<p>The UK is strong for students who want globally recognized degrees, shorter program duration, high academic standards, and direct access to finance, consulting, creative, healthcare, law, and technology employers.</p><p>One-year master's degrees can reduce total cost and help students return to the workforce faster while still gaining a prestigious international credential.</p>",
+                education: "<p>UK education is focused, specialized, and assessment-led. Students choose a clear academic route early, then develop through lectures, tutorials, seminars, lab work, dissertations, and industry projects.</p><ul><li><strong>Intakes:</strong> September/October is the main intake; January is available for many programs.</li><li><strong>Teaching style:</strong> Independent reading, critical analysis, group projects, and dissertation work.</li><li><strong>Best fit:</strong> Business, finance, law, public policy, engineering, healthcare, data, creative arts, and one-year master's seekers.</li></ul>",
+                career: "<p>The UK offers strong graduate outcomes in London, Manchester, Edinburgh, Birmingham, Bristol, and Cambridge. Students should build internships, graduate scheme applications, LinkedIn networking, and employer-specific CVs early.</p><ul><li>High-demand sectors: finance, analytics, software, AI, healthcare, engineering, consulting, law, supply chain, and sustainability.</li><li>Post-study planning should consider the Graduate visa timeline and Skilled Worker sponsorship routes.</li></ul>",
+                costs: "<ul><li><strong>Tuition:</strong> GBP 12,000-25,000/year for many taught master's programs; medicine, MBA, and elite programs may be higher.</li><li><strong>Living:</strong> London is commonly GBP 15,000-18,000/year; regional cities can be lower.</li><li><strong>Budget advantage:</strong> One-year master's programs can reduce total tuition and living cost compared with two-year destinations.</li></ul>",
+                scholarships: "<ul><li>Chevening, Commonwealth, GREAT Scholarships, and university merit awards.</li><li>Russell Group and specialist schools offer course-specific scholarships for strong academic profiles.</li><li>Early applications usually improve funding chances.</li></ul>",
+                visa: "<ul><li><strong>Student visa:</strong> Requires CAS from a licensed sponsor, funds evidence, English requirement, and healthcare surcharge.</li><li><strong>Work:</strong> Most degree students can work part-time during term and full-time during vacations, subject to visa conditions.</li><li><strong>Graduate route:</strong> For applications on or before 31 December 2026 it lasts 2 years; from 1 January 2027 it lasts 18 months. PhD/doctoral graduates get 3 years.</li></ul>",
+                faqs: [
+                    { q: "Is a one-year master's too intense?", a: "It is fast-paced, but well suited for students who are organized and want a quicker career return." },
+                    { q: "Can I stay after study?", a: "Yes, through the Graduate visa if eligible, then by switching to Skilled Worker if you secure sponsorship." },
+                    { q: "Is London necessary?", a: "No. Regional cities often offer better affordability and strong universities; London is best for finance, consulting, media, and networking." }
+                ]
+            },
+            germany: {
+                images: {
+                    1: "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&w=900&q=80",
+                    2: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80",
+                    3: "https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=900&q=80",
+                    4: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=900&q=80",
+                    5: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80",
+                    6: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80",
+                    7: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=900&q=80"
+                },
+                insights: [
+                    { label: "Tuition", value: "Often EUR 0-6,000/year at public universities" },
+                    { label: "Living costs", value: "EUR 11,900+ blocked account benchmark/year" },
+                    { label: "Language", value: "Many master's programs in English; German helps jobs" },
+                    { label: "Post-study route", value: "18-month residence permit to seek skilled work" }
+                ],
+                why: "<p>Germany is a high-value destination for engineering, technology, automotive, manufacturing, renewable energy, business analytics, and applied sciences. Public universities are highly respected and often have very low tuition.</p><p>Students benefit from strong industry links, practical labs, research institutes, and a job market that values technical skills.</p>",
+                costs: "<ul><li><strong>Tuition:</strong> Many public universities charge low or no tuition, with semester contribution often around EUR 150-350. Some states and private universities charge more.</li><li><strong>Living:</strong> Plan around EUR 900-1,200/month depending on city.</li><li><strong>Budget note:</strong> Munich and Frankfurt are expensive; Aachen, Dresden, Leipzig, and smaller university cities can be better value.</li></ul>",
+                scholarships: "<ul><li>DAAD scholarships, Deutschlandstipendium, Erasmus+, university-specific waivers, and research assistant roles.</li><li>Strong academic performance, research fit, and relevant projects matter heavily for funding.</li></ul>",
+                visa: "<ul><li><strong>Student visa:</strong> National visa with admission letter, proof of funds, health insurance, academics, and accommodation plan.</li><li><strong>Work:</strong> International students can work within statutory annual day limits.</li><li><strong>Post-study:</strong> Graduates can apply for an 18-month residence permit to look for qualified employment.</li></ul>",
+                faqs: [
+                    { q: "Is German language mandatory?", a: "Not for many English-taught master's programs, but German improves internships, part-time work, and full-time job outcomes." },
+                    { q: "Are public universities really affordable?", a: "Yes, many are low-cost, but living expenses and blocked account planning are still essential." },
+                    { q: "Best programs for Germany?", a: "Mechanical, automotive, electrical, computer science, data, renewable energy, supply chain, and applied sciences." }
+                ]
+            },
+            ireland: {
+                images: {
+                    1: "https://images.unsplash.com/photo-1590089415225-401ed6f9b8ce?auto=format&fit=crop&w=900&q=80",
+                    2: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=80",
+                    3: "https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=900&q=80",
+                    4: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
+                    5: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80",
+                    6: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80",
+                    7: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=900&q=80"
+                },
+                insights: [
+                    { label: "Tuition", value: "EUR 10,000-25,000 per year" },
+                    { label: "Living costs", value: "EUR 12,000-18,000 per year" },
+                    { label: "Industry edge", value: "European base for major tech and pharma firms" },
+                    { label: "Post-study route", value: "Up to 24 months for eligible master's graduates" }
+                ],
+                why: "<p>Ireland is a focused destination for technology, pharma, business analytics, finance, cybersecurity, and data roles. It offers English-language education inside the EU with strong links to multinational employers.</p>",
+                costs: "<ul><li><strong>Tuition:</strong> EUR 10,000-25,000/year for most non-EU programs; business and medicine can be higher.</li><li><strong>Living:</strong> Dublin is premium priced; Cork, Galway, Limerick, and Waterford can be more affordable.</li><li><strong>Budget note:</strong> Housing should be planned early because demand is high in major cities.</li></ul>",
+                scholarships: "<ul><li>Government of Ireland International Education Scholarships, university merit awards, and course-specific discounts.</li><li>Strong SOP, academics, IELTS/PTE, and relevant experience improve scholarship chances.</li></ul>",
+                visa: "<ul><li><strong>Student permission:</strong> Stamp 2 for eligible full-time programs.</li><li><strong>Work:</strong> Part-time work during term and higher limits during eligible holidays, subject to official rules.</li><li><strong>Post-study:</strong> Third Level Graduate Programme can allow eligible graduates to stay and seek work, commonly up to 24 months for master's graduates.</li></ul>",
+                faqs: [
+                    { q: "Why Ireland for tech?", a: "Dublin hosts major operations for Google, Meta, Microsoft, Amazon, Apple, and many SaaS companies." },
+                    { q: "Is Ireland expensive?", a: "Dublin can be costly, mainly due to rent. Smaller cities can improve affordability." },
+                    { q: "Does Ireland help with EU careers?", a: "Yes, experience in Ireland can build a strong European profile, especially in tech, pharma, finance, and analytics." }
+                ]
+            },
+            netherlands: {
+                images: {
+                    1: "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?auto=format&fit=crop&w=900&q=80",
+                    2: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=80",
+                    3: "https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=900&q=80",
+                    4: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
+                    5: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80",
+                    6: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80",
+                    7: "https://images.unsplash.com/photo-1581093458791-9d09cc352d4f?auto=format&fit=crop&w=900&q=80"
+                },
+                insights: [
+                    { label: "Tuition", value: "EUR 8,000-22,000 per year" },
+                    { label: "Living costs", value: "EUR 12,000-18,000 per year" },
+                    { label: "Programs", value: "Large selection of English-taught degrees" },
+                    { label: "Post-study route", value: "1-year Orientation Year for eligible graduates" }
+                ],
+                why: "<p>The Netherlands offers a modern, English-friendly academic environment with strong outcomes in engineering, business, agriculture, water management, logistics, design, and data. Teaching is practical, collaborative, and internationally oriented.</p>",
+                costs: "<ul><li><strong>Tuition:</strong> EUR 8,000-22,000/year for most non-EU students depending on university and program.</li><li><strong>Living:</strong> EUR 1,000-1,500/month is a realistic planning range.</li><li><strong>Budget note:</strong> Housing is competitive in Amsterdam, Delft, Utrecht, and Eindhoven; apply early.</li></ul>",
+                scholarships: "<ul><li>NL Scholarship, Erasmus+, Orange Tulip Scholarship, university excellence scholarships, and faculty awards.</li><li>Strong profiles with clear motivation and relevant projects are favored.</li></ul>",
+                visa: "<ul><li><strong>Student residence:</strong> Usually coordinated by the recognized university sponsor.</li><li><strong>Work:</strong> Part-time work generally requires employer permit support, so internships and university guidance matter.</li><li><strong>Post-study:</strong> Eligible graduates can apply for the Orientation Year residence permit to search for work or start a business.</li></ul>",
+                faqs: [
+                    { q: "Is English enough?", a: "English works well in universities and many cities, but Dutch helps daily life and local hiring." },
+                    { q: "What is the teaching style?", a: "Problem-based learning, projects, group work, presentations, and applied research." },
+                    { q: "Best sectors?", a: "High tech, logistics, water management, sustainability, agriculture, design, finance, and data." }
+                ]
+            },
+            europe: {
+                images: {
+                    1: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=900&q=80",
+                    2: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=80",
+                    3: "https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=900&q=80",
+                    4: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
+                    5: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80",
+                    6: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80",
+                    7: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=900&q=80"
+                },
+                insights: [
+                    { label: "Tuition", value: "EUR 2,000-25,000 per year depending on country" },
+                    { label: "Living costs", value: "EUR 8,000-18,000 per year" },
+                    { label: "Mobility", value: "Schengen travel and cross-border networks" },
+                    { label: "Post-study route", value: "Varies by country; usually 6-24 months" }
+                ],
+                why: "<p>Europe is best for students who want a broad international experience, affordable public universities in many countries, strong research, multilingual exposure, and access to industries across the Schengen region.</p>",
+                costs: "<ul><li><strong>Tuition:</strong> Germany and parts of France/Italy/Spain can be low-cost; Netherlands, Scandinavia, and Switzerland can be higher.</li><li><strong>Living:</strong> Southern and Eastern Europe are usually more affordable; Nordic countries and Switzerland are premium.</li><li><strong>Budget note:</strong> Country selection should be based on program quality, language, post-study rules, and career sector.</li></ul>",
+                scholarships: "<ul><li>Erasmus Mundus Joint Masters, DAAD, Eiffel Excellence, Italian regional scholarships, Swedish Institute, and university awards.</li><li>European scholarships are often deadline-sensitive and may require strong academic fit.</li></ul>",
+                visa: "<ul><li><strong>Student visa:</strong> Usually a national long-stay visa or residence permit for the specific country.</li><li><strong>Work:</strong> Part-time work rules differ by country and language ability can affect employability.</li><li><strong>Post-study:</strong> France, Germany, Spain, Italy, Sweden, and others offer different job-search or graduate routes.</li></ul>",
+                faqs: [
+                    { q: "Which European country is best?", a: "Germany for engineering value, France for business/luxury, Italy for design, Netherlands for English-taught applied programs, and Nordics for sustainability." },
+                    { q: "Can I travel across Europe?", a: "Schengen residence permissions often allow short travel across Schengen countries, subject to rules." },
+                    { q: "Is language a barrier?", a: "Many master's programs are in English, but local language helps part-time work, internships, and long-term careers." }
+                ]
+            },
+            australia: {
+                images: {
+                    1: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&w=900&q=80",
+                    2: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=80",
+                    3: "https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=900&q=80",
+                    4: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
+                    5: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80",
+                    6: "https://images.unsplash.com/photo-1521791055366-0d553872125f?auto=format&fit=crop&w=900&q=80",
+                    7: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=900&q=80"
+                },
+                insights: [
+                    { label: "Tuition", value: "AUD 25,000-50,000 per year" },
+                    { label: "Living costs", value: "AUD 24,000-32,000 per year" },
+                    { label: "Work while studying", value: "Part-time work rights subject to visa caps" },
+                    { label: "Post-study route", value: "Temporary Graduate visa based on qualification and rules" }
+                ],
+                why: "<p>Australia combines globally ranked universities, practical teaching, high quality of life, multicultural cities, and strong employment demand in healthcare, engineering, IT, education, business, and construction.</p>",
+                career: "<p>Students should prioritize work-integrated learning, internships, regional study options where suitable, and skills aligned with Australia's labour market. Post-study options depend on qualification level, location, and changing immigration rules.</p><ul><li>High-demand sectors: nursing, allied health, aged care, software, cybersecurity, engineering, construction management, accounting, and education.</li><li>Career advantage: practical curriculum, employer projects, and strong city economies in Sydney, Melbourne, Brisbane, Perth, Adelaide, and Canberra.</li></ul>",
+                costs: "<ul><li><strong>Tuition:</strong> AUD 25,000-45,000/year for many programs; medicine, MBA, and specialist degrees can be higher.</li><li><strong>Living:</strong> AUD 24,000-32,000/year depending on city, rent, and lifestyle.</li><li><strong>Budget note:</strong> Sydney and Melbourne are premium; Adelaide, Perth, and regional cities may offer better affordability.</li></ul>",
+                scholarships: "<ul><li>Australia Awards, Destination Australia, university merit scholarships, faculty awards, and research scholarships.</li><li>Strong academic records, English scores, leadership, and course fit support scholarship outcomes.</li></ul>",
+                visa: "<ul><li><strong>Student visa:</strong> Subclass 500 with Confirmation of Enrolment, funds, Genuine Student requirement, health cover, and English evidence where required.</li><li><strong>Work:</strong> Student work rights apply during study and breaks according to visa conditions.</li><li><strong>Post-study:</strong> Temporary Graduate visa options depend on current Home Affairs rules, qualification, age, English, and location.</li></ul>",
+                faqs: [
+                    { q: "Is Australia good for PR planning?", a: "It can be, but outcomes depend on occupation demand, points, English, state nomination, work experience, and current migration settings." },
+                    { q: "Which courses are strong?", a: "Nursing, IT, engineering, construction management, data, education, accounting, and healthcare." },
+                    { q: "Should I consider regional universities?", a: "Yes, if the program is strong and aligns with career goals; regional study can improve affordability and may support migration planning." }
+                ]
+            },
+            canada: {
+                images: {
+                    1: "https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=900&q=80",
+                    2: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=80",
+                    3: "https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=900&q=80",
+                    4: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
+                    5: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80",
+                    6: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80",
+                    7: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=900&q=80"
+                },
+                insights: [
+                    { label: "Tuition", value: "CAD 18,000-45,000 per year" },
+                    { label: "Living costs", value: "CAD 15,000-25,000 per year" },
+                    { label: "Co-op advantage", value: "Paid co-op/internship options in many programs" },
+                    { label: "Post-study route", value: "PGWP length depends on program level and duration" }
+                ],
+                why: "<p>Canada is strong for students seeking safe cities, practical education, co-op learning, multicultural campuses, and clear links between education, Canadian work experience, and long-term career planning.</p><p>Recent rule changes make program and institution selection especially important, so students should verify DLI status, PGWP eligibility, and field requirements before paying deposits.</p>",
+                career: "<p>Canada rewards students who choose eligible programs, build co-op experience, improve language scores, and target provinces with demand in their field. PGWP rules depend on program type, duration, passport validity, and current eligibility settings.</p><ul><li>High-demand sectors: software, cybersecurity, AI, healthcare, nursing, construction, skilled trades, engineering, finance, and supply chain.</li><li>Career advantage: co-op terms, Canadian experience, provincial labour demand, and employer references.</li></ul>",
+                costs: "<ul><li><strong>Tuition:</strong> CAD 18,000-35,000/year for many colleges and universities; premium programs can be higher.</li><li><strong>Living:</strong> CAD 15,000-25,000/year depending on province and housing.</li><li><strong>Budget note:</strong> Toronto and Vancouver are expensive; Alberta, Manitoba, Saskatchewan, Atlantic Canada, and smaller cities can be more affordable.</li></ul>",
+                scholarships: "<ul><li>University entrance scholarships, graduate funding, research assistantships, provincial awards, and institution-specific bursaries.</li><li>Scholarships are competitive, so students should apply early with strong SOPs and academic evidence.</li></ul>",
+                visa: "<ul><li><strong>Study permit:</strong> Requires admission to a DLI, financial proof, PAL/TAL where applicable, and required documents.</li><li><strong>Work:</strong> Work rights depend on study permit conditions and official IRCC rules.</li><li><strong>Post-study:</strong> PGWP length depends on program duration and level; eligible master's programs of at least 8 months may qualify for a 3-year PGWP.</li></ul>",
+                faqs: [
+                    { q: "Is every Canadian college PGWP eligible?", a: "No. Students must verify the DLI and program eligibility before applying." },
+                    { q: "Is Canada still good for students?", a: "Yes, but only with careful program, city, budget, and PGWP planning." },
+                    { q: "Which cities are best?", a: "Toronto and Waterloo for tech, Vancouver for tech and lifestyle, Montreal for affordability and AI, Calgary for energy and engineering, and Atlantic cities for lower costs." }
+                ]
+            }
+        };
+
+        Object.keys(countryEnhancements).forEach(key => {
+            countryData[key] = {
+                ...countryData[key],
+                ...countryEnhancements[key],
+                images: {
+                    ...(countryData[key]?.images || {}),
+                    ...(countryEnhancements[key].images || {})
+                }
+            };
+        });
+
         const mainView = document.getElementById('main-view');
         const countryView = document.getElementById('country-view');
 
@@ -1897,11 +2211,24 @@
             const images = data.images || {};
             for (let i = 1; i <= 8; i++) {
                 const img = document.getElementById(`cp-img-${i}`);
-                if (img && images[i]) img.src = images[i];
+                if (img && images[i]) {
+                    img.src = images[i];
+                    img.alt = `${data.name} ${img.alt || 'study abroad information'}`;
+                    img.onerror = () => {
+                        img.onerror = null;
+                        img.src = data.img;
+                    };
+                }
             }
 
             // Set hero
-            document.getElementById('cp-hero-img').src = data.img;
+            const heroImg = document.getElementById('cp-hero-img');
+            heroImg.src = data.img;
+            heroImg.alt = `Study in ${data.name}`;
+            heroImg.onerror = () => {
+                heroImg.onerror = null;
+                heroImg.src = "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1920&q=80";
+            };
             document.getElementById('cp-title').innerText = `Study in ${data.name}`;
             document.getElementById('cp-name-1').innerText = data.name;
 
@@ -1914,6 +2241,16 @@
                 }
             });
 
+            // Planning snapshot
+            const insightsGrid = document.getElementById('cp-insights');
+            insightsGrid.innerHTML = '';
+            (data.insights || []).forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'insight-card';
+                card.innerHTML = `<span>${item.label}</span><strong>${item.value}</strong>`;
+                insightsGrid.appendChild(card);
+            });
+
             // Set content sections
             document.getElementById('cp-why').innerHTML = data.why;
             document.getElementById('cp-education').innerHTML = data.education;
@@ -1921,6 +2258,8 @@
             document.getElementById('cp-student-life').innerHTML = data.studentLife || "";
             document.getElementById('cp-research').innerHTML = data.research || "";
             document.getElementById('cp-visa').innerHTML = data.visa || "";
+            document.getElementById('cp-costs').innerHTML = data.costs || "";
+            document.getElementById('cp-scholarships').innerHTML = data.scholarships || "";
 
             // Universities
             const uniList = document.getElementById('cp-universities');
@@ -1943,13 +2282,14 @@
 
             // Cities
             const citiesGrid = document.getElementById('cp-cities');
+            const citiesSection = document.getElementById('cp-cities-section');
             citiesGrid.innerHTML = '';
             (data.cities || []).forEach(city => {
                 const card = document.createElement('div');
                 card.className = 'city-card';
                 card.innerHTML = `
                     <div class="city-card-image">
-                        <img src="${city.img}" alt="${city.name}">
+                        <img src="${city.img}" alt="${city.name}" onerror="this.onerror=null;this.src='${data.img}'">
                     </div>
                     <div class="city-card-content">
                         <h3>${city.name}</h3>
@@ -1958,9 +2298,11 @@
                 `;
                 citiesGrid.appendChild(card);
             });
+            citiesSection.classList.toggle('country-section-hidden', !(data.cities || []).length);
 
             // Success Stories
             const storiesGrid = document.getElementById('cp-success-stories');
+            const storiesSection = document.getElementById('cp-success-section');
             storiesGrid.innerHTML = '';
             (data.successStories || []).forEach(story => {
                 const card = document.createElement('div');
@@ -1978,14 +2320,15 @@
                 `;
                 storiesGrid.appendChild(card);
             });
+            storiesSection.classList.toggle('country-section-hidden', !(data.successStories || []).length);
 
             // FAQs
             const faqsDiv = document.getElementById('cp-faqs');
             faqsDiv.innerHTML = '';
             (data.faqs || []).forEach((faq, idx) => {
-                const item = document.createElement('div');
-                item.style.marginBottom = '1rem';
-                item.innerHTML = `<strong>${faq.q}</strong><p style="color: var(--text-secondary); margin-top: 0.5rem;">${faq.a}</p>`;
+                const item = document.createElement('article');
+                item.className = 'info-panel';
+                item.innerHTML = `<h3>${faq.q}</h3><p>${faq.a}</p>`;
                 faqsDiv.appendChild(item);
             });
 
